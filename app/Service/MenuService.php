@@ -19,7 +19,7 @@ class MenuService
 
     function getById($id){
         $menus = $this->model->with([
-
+            'materials_of_menus','menu_has__images'
         ])->where('id',$id)->first;
         return $menus;
     }
@@ -27,7 +27,7 @@ class MenuService
     function getByName($name)
     {
         $menus = $this->model->with([
-            'materials_of_menus'
+            'materials_of_menus','menu_has__images'
         ])->where('name',$name)->first;
         return $menus;
     }

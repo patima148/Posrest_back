@@ -25,7 +25,7 @@ class MaterialController extends Controller
         return $Material;
     }
 
-    public function showById($id)
+    public function show($id)
     {
         $m = $this->service->getById($id);
         return response()->json($m);
