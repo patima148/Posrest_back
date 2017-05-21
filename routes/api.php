@@ -22,6 +22,10 @@ Route::resource('material','MaterialController',[
     'middleware' => 'jwt.auth'
 ]);
 
+/*Route::GET('material/{id}','MaterialController@showById',[
+    'middleware' => 'jwt.auth'
+]);*/
+
 Route::resource('posts','MaterialController');
 
 
