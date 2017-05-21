@@ -26,4 +26,13 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    function Brewer()
+    {
+        return $this->hasMany('App\Brewing');
+    }
+
+
+
+
 }
