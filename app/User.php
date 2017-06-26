@@ -2,10 +2,10 @@
 
 namespace App;
 
+use App\UserElegant as Elegant;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends UserElegant
 {
     use Notifiable;
 
@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        //'name', 'email', 'password',
     ];
 
     /**
@@ -27,12 +27,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    function Brewer()
+
+    function Image()
     {
-        return $this->hasMany('App\Brewing');
+        return parent::hasMany('App\Image');
     }
-
-
-
 
 }
