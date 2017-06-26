@@ -19,8 +19,18 @@ use Illuminate\Http\Request;
 */
 
 Route::resource('material','MaterialController',[
-    'middleware' => 'jwt.auth'
+   // 'middleware' => 'jwt.auth'
 ]);
+
+
+Route::resource('user', 'UserController',[
+
+]);
+Route::get('user/{id}', 'UserController@show',[
+
+]);
+
+Route::resource('image','ImageController');
 
 /*Route::GET('material/{id}','MaterialController@showById',[
     'middleware' => 'jwt.auth'
