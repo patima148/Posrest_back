@@ -2,26 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Ingredient;
+use App\Service\IngredientService;
 use Illuminate\Http\Request;
-use App\MaterialsOfMenu;
-use App\Service\MaterialsOfMenuService;
-class MaterialsOfMenuController extends Controller
+
+class IngredientController extends Controller
 {
-
-    private $service;
-    function __construct(MaterialsOfMenuService $materialsOfMenu)
-    {
-        $this->service=$materialsOfMenu;
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    private $service;
+
+    function __construct(IngredientService $ingredientService)
+    {
+        $this->service = $ingredientService;
+    }
+
     public function index()
     {
-        //
+        $ingredient = $this->service->getAll();
+        return response()->json($ingredient);
     }
 
     /**
@@ -40,29 +42,32 @@ class MaterialsOfMenuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
+        $ingredient = $this->service->store($request, $id);
 
+        return response()->json($ingredient);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Ingredient  $ingredient
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        $ingredient = $this->service->getById($id);
+        return response()->json($ingredient);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Ingredient  $ingredient
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Ingredient $ingredient)
     {
         //
     }
@@ -71,22 +76,24 @@ class MaterialsOfMenuController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Ingredient  $ingredient
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $TypeId)
     {
-        //
+        $ingredient = $this->service->update($request, $id, $TypeId);
+        return response()->json($ingredient);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Ingredient  $ingredient
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        $ingredients = $this->service->delete($id);
+        return response()->json($ingredients);
     }
 }

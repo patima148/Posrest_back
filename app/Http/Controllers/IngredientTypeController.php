@@ -2,26 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Service\IngredientService;
 use Illuminate\Http\Request;
-use App\MaterialsOfMenu;
-use App\Service\MaterialsOfMenuService;
-class MaterialsOfMenuController extends Controller
+use App\Service\IngredientTypeService;
+
+class IngredientTypeController extends Controller
 {
-
-    private $service;
-    function __construct(MaterialsOfMenuService $materialsOfMenu)
-    {
-        $this->service=$materialsOfMenu;
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    private $service;
+    function __construct(IngredientTypeService $ingredientTypeService)
+    {
+        $this->service = $ingredientTypeService;
+    }
+
     public function index()
     {
-        //
+        $ingredient_type = $this->service->getAll();
+
+        return response()->json($ingredient_type);
     }
 
     /**
@@ -42,7 +44,7 @@ class MaterialsOfMenuController extends Controller
      */
     public function store(Request $request)
     {
-
+        //
     }
 
     /**
@@ -53,7 +55,8 @@ class MaterialsOfMenuController extends Controller
      */
     public function show($id)
     {
-        //
+        $ingredient_type = $this->service->getById($id);
+        return response()->json($ingredient_type);
     }
 
     /**

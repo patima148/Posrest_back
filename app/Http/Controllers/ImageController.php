@@ -2,26 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Image;
+use App\Service\ImageService;
 use Illuminate\Http\Request;
-use App\MaterialsOfMenu;
-use App\Service\MaterialsOfMenuService;
-class MaterialsOfMenuController extends Controller
+
+class ImageController extends Controller
 {
-
-    private $service;
-    function __construct(MaterialsOfMenuService $materialsOfMenu)
-    {
-        $this->service=$materialsOfMenu;
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    private $service;
+    function __construct(ImageService $imageService)
+    {
+        $this->service = $imageService;
+    }
+
     public function index()
     {
-        //
+        $image = $this->service->getAll();
+
+        return response()->json($image);
     }
 
     /**
@@ -42,7 +44,13 @@ class MaterialsOfMenuController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
 
+        $image = $this->service->store($request);
+
+        return response()->json($image);
     }
 
     /**
@@ -51,7 +59,7 @@ class MaterialsOfMenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
         //
     }

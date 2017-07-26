@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateIngredientTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,24 +13,27 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('ingredient_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('phone_number');
 
-            $table->rememberToken();
             $table->timestamps();
         });
 
         $super = [
-            'name' => 'Kam',
-            'email' => 'kam@cmu.ac.th',
-            'password' => bcrypt('hahaha'),
-            'phone_number' => '0900000000'
+            'name' => 'normal'
         ];
-        DB::table('users')->insert($super);
+        DB::table('ingredient_types')->insert($super);
+
+        $super = [
+            'name' => 'high'
+        ];
+        DB::table('ingredient_types')->insert($super);
+
+        $super = [
+            'name' => 'premium'
+        ];
+        DB::table('ingredient_types')->insert($super);
     }
 
     /**
@@ -40,6 +43,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('ingredient_types');
     }
 }

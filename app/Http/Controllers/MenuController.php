@@ -2,53 +2,43 @@
 
 namespace App\Http\Controllers;
 
+use App\MaterialsOfMenu;
 use App\Menus;
+
+use App\Service\MaterialOfMenuService;
 use App\Service\MenuService;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
 {
     private $service;
-    function __construct(MenuService $menuService)
+    private $serviceMatOfMenu;
+    function __construct(MenuService $menuService, MaterialOfMenuService $materialOfMenuService)
     {
         $this->service = $menuService;
+        $this->serviceMatOfMenu = $materialOfMenuService;
     }
 
 
     public function index (){
-        $Menu = menu::all();
+        $Menu = Menus::all();
         return $Menu;
     }
 
     public function create()
     {
-        //
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $request->all();
-        $menu = new Menus();
-        $menu->name = $request['name'];
-        $menu->sell_price = $request['sell_price'];
-        $menu->menu_type_id = $request['menu_type_id'];
+      $m = $this->service->store($request);
+      $matofmenu = $this->serviceMatOfMenu->storeMatOfMenu($request);
 
-        return response()->json($menu);
+       return response()->json([$m,$matofmenu]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function showById($id)
+    public function show($id)
     {
         $menu = $this->service->getById($id);
 
@@ -62,35 +52,16 @@ class MenuController extends Controller
         return response()->json($menu);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

@@ -28,7 +28,12 @@ class MaterialController extends Controller
     public function show($id)
     {
         $m = $this->service->getById($id);
-        return response()->json($m);
+        $try  =  exec("D:\Mywork\python_try.py", $output, $return);
+
+        if ($return) {
+            throw new \Exception("Error executing command - error code: $return");
+        }
+        return response()->json($try);
     }
 
     public function create(){
@@ -36,16 +41,10 @@ class MaterialController extends Controller
     }
 
 
-    public function store(Request $request){
-        $request->all();
-
-        $materials = new Materials;
-        $materials->name = $request['name'];
-        $materials->price = $request['price'];
-        $materials->type = $request['type'];
-        $materials->save();
-
-       return response()->json($materials);
+    public function store(Request $request)
+    {
+        $mat = $this->service->store($request);
+        return response()->json($mat);
     }
 
     public function update(Request $request, $id)

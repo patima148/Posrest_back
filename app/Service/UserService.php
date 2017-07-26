@@ -16,17 +16,18 @@ class UserService
     }
 
     function getById($id){
-        $menus = $this->model->with([
+        $user = $this->model->with([
 
-        ])->where('id',$id)->first;
-        return $menus;
+        ])->where('user_id',$id);
+        return $user;
     }
 
     function getByName($name)
     {
-        $menus = $this->model->with([
+        $user = $this->model->with([
 
         ])->where('name',$name)->first;
-        return $menus;
+        return $user;
     }
+
 }
