@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Image;
-use App\Service\ImageService;
+use App\Service\IngredientService;
 use Illuminate\Http\Request;
+use App\Service\IngredientTypeService;
 
-class ImageController extends Controller
+class IngredientTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,16 +14,16 @@ class ImageController extends Controller
      * @return \Illuminate\Http\Response
      */
     private $service;
-    function __construct(ImageService $imageService)
+    function __construct(IngredientTypeService $ingredientTypeService)
     {
-        $this->service = $imageService;
+        $this->service = $ingredientTypeService;
     }
 
     public function index()
     {
-        $image = $this->service->getAll();
+        $ingredient_type = $this->service->getAll();
 
-        return response()->json($image);
+        return response()->json($ingredient_type);
     }
 
     /**
@@ -44,13 +44,7 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-
-        $image = $this->service->store($request);
-
-        return response()->json($image);
+        //
     }
 
     /**
@@ -59,9 +53,10 @@ class ImageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        //
+        $ingredient_type = $this->service->getById($id);
+        return response()->json($ingredient_type);
     }
 
     /**

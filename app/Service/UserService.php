@@ -1,17 +1,15 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: HOME
- * Date: 20/6/2560
- * Time: 18:40
+ * Date: 20/5/2560
+ * Time: 18:33
  */
-
-namespace App\Service;
-
-use App\User;
-use Illuminate\Database\Eloquent\Builder;
 class UserService
 {
+    private $model;
+
     function __construct(User $user)
     {
         $this->model = $user;
@@ -20,13 +18,16 @@ class UserService
     function getById($id){
         $user = $this->model->with([
 
-        ])->where('id',$id)->first();
+        ])->where('user_id',$id);
         return $user;
     }
 
     function getByName($name)
     {
-        $user = $this->model->Where('name',$name)->first();
+        $user = $this->model->with([
+
+        ])->where('name',$name)->first;
         return $user;
     }
+
 }

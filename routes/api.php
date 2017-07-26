@@ -17,26 +17,41 @@ use Illuminate\Http\Request;
     return $request->user();
 });
 */
-
-Route::resource('material','MaterialController',[
-   // 'middleware' => 'jwt.auth'
+//----------------------------  igredient ---------------------------------------
+Route::resource('ingredient','IngredientController',[
+    //'middleware' => 'jwt.aut'
 ]);
 
-
-Route::resource('user', 'UserController',[
-
+Route::post('ingredient/{id}','IngredientController@store',[
+    //'middleware' => 'jwt.aut'
 ]);
-Route::get('user/{id}', 'UserController@show',[
 
+Route::get('ingredient/{id}','IngredientController@show',[
+    //'middleware' => 'jwt.aut'
+]);
+Route::put('ingredient/{id}/{TypeId}','IngredientController@update',[
+    //'middleware' => 'jwt.aut'
+]);
+Route::put('ingredient/{id}','IngredientController@update',[
+    //'middleware' => 'jwt.aut'
+]);
+//-------------------------------------------------------------------------------
+
+
+Route::resource('menu','MenuController',[
+    //'middleware' => 'jwt.aut'
 ]);
 
 Route::resource('image','ImageController');
+
+Route::resource('ingredient_type','IngredientTypeController');
+Route::resource('ingredient_type/{id}','IngredientTypeController@show');
 
 /*Route::GET('material/{id}','MaterialController@showById',[
     'middleware' => 'jwt.auth'
 ]);*/
 
-Route::resource('posts','MaterialController');
+
 
 
 

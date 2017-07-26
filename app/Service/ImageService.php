@@ -2,13 +2,15 @@
 /**
  * Created by PhpStorm.
  * User: HOME
- * Date: 20/6/2560
- * Time: 19:01
+ * Date: 26/6/2560
+ * Time: 16:58
  */
 
 namespace App\Service;
-
 use App\Image;
+
+use Illuminate\Http\Request;
+
 class ImageService
 {
     private $model;
@@ -20,6 +22,26 @@ class ImageService
     /**
      * @return Image
      */
+    public function store(Request $request)
+    {
+        $image = new Image();
+
+        $file_name = time().'.'.$request->file->getClientOriginalExtension();
+        $request->file->move(public_path('images'), $file_name);
+
+
+        $image->file_name = $file_name;
+
+        $image->save();
+
+        return $image;
+    }
+
+    public function getAll(){
+        $image = Image::all();
+        return $image;
+    }
+
     public function getById($id)
     {
 
@@ -28,4 +50,6 @@ class ImageService
         ])->where('id',$id);
         return $image;
     }
+
+
 }

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Image;
-use App\Service\ImageService;
+use App\Ingredient;
+use App\Service\IngredientService;
 use Illuminate\Http\Request;
 
-class ImageController extends Controller
+class IngredientController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,16 +14,16 @@ class ImageController extends Controller
      * @return \Illuminate\Http\Response
      */
     private $service;
-    function __construct(ImageService $imageService)
+
+    function __construct(IngredientService $ingredientService)
     {
-        $this->service = $imageService;
+        $this->service = $ingredientService;
     }
 
     public function index()
     {
-        $image = $this->service->getAll();
-
-        return response()->json($image);
+        $ingredient = $this->service->getAll();
+        return response()->json($ingredient);
     }
 
     /**
@@ -42,35 +42,32 @@ class ImageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        $this->validate($request, [
-            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        $ingredient = $this->service->store($request, $id);
 
-        $image = $this->service->store($request);
-
-        return response()->json($image);
+        return response()->json($ingredient);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Ingredient  $ingredient
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        //
+        $ingredient = $this->service->getById($id);
+        return response()->json($ingredient);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Ingredient  $ingredient
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Ingredient $ingredient)
     {
         //
     }
@@ -79,22 +76,24 @@ class ImageController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Ingredient  $ingredient
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $TypeId)
     {
-        //
+        $ingredient = $this->service->update($request, $id, $TypeId);
+        return response()->json($ingredient);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Ingredient  $ingredient
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        $ingredients = $this->service->delete($id);
+        return response()->json($ingredients);
     }
 }

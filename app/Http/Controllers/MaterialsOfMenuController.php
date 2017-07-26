@@ -3,9 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\MaterialsOfMenu;
+use App\Service\MaterialsOfMenuService;
 class MaterialsOfMenuController extends Controller
 {
+
+    private $service;
+    function __construct(MaterialsOfMenuService $materialsOfMenu)
+    {
+        $this->service=$materialsOfMenu;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -35,7 +43,6 @@ class MaterialsOfMenuController extends Controller
     public function store(Request $request)
     {
 
-        //
     }
 
     /**
