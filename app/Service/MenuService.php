@@ -1,8 +1,10 @@
 <?php
 namespace App\Service;
 
-use App\MaterialsOfMenu;
-use App\Menus;
+use App\Ingredient;
+use App\Menu;
+use App\Branch;
+use App\BranchIngredient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -14,41 +16,48 @@ use Illuminate\Support\Facades\DB;
  */
 class MenuService
 {
-    private $model;
+    private $modelMenu;
+    private $modelBranch;
+    private $modelBranchIngredient;
 
-    function __construct(Menus $menus)
+    function __construct(Menu $menu, Branch $branch, BranchIngredient $branchIngredient)
     {
-        $this->model = $menus;
+        $this->modelMenu = $menu;
+        $this->modelBranch = $branch;
+        $this->modelBranchIngredient = $branchIngredient;
     }
 
     function store(Request $request)
     {
+        $input = $request->all();
+        $menu = new Menu();
+        $menu->name = $request['name'];
+        $price = $request['price'];
+        $type = $request['type'];
+        $grade = $request['grade'];
+        $BranchId = $request['BranchId'];
 
-        $m = new Menus;
-        $m->name = $request['name'];
-        $m->sell_price = $request['sell_price'];
-        $m->save();
 
-        $m->MaterialsOfMenu()->sync($request->material_id);
-        $m->MaterialsOfMenu()->sync($request->quantity);
-        $m->save();
 
-        //$m::with("Materials_Of_Menu");
+        if($menu->save())
+        {
+            $menu->Branch()->attach($BranchId, ['price'=>$price], ['type'=>$type], ['grade'=>$grade]);
 
-        return $m;
+        }
+        $menu = Menu::with("Branch")->get();
+
+        return $menu;
     }
 
     function getById($id){
 
-        return $this->model->where('id',$id)->first;
+        return $this->modelMenu->where('id',$id)->first();
     }
 
-    function getByName($name)
+    function getAll()
     {
-        $menus = $this->model->with([
-            'materials_of_menus','menu_has__images'
-        ])->where('name',$name)->first;
-        return $menus;
+        $menu = Menu::with("Branch")->get();
+        return $menu;
     }
 
 }

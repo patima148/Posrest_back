@@ -13,12 +13,31 @@ class CreateRoleTable extends Migration
      */
     public function up()
     {
-        Schema::create('role', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
             $table->string("role_name");
 
             $table->timestamps();
         });
+        $super = [
+            'role_name' => 'Owner'
+        ];
+        DB::table('roles')->insert($super);
+
+        $super = [
+            'role_name' => 'Branch manager'
+        ];
+        DB::table('roles')->insert($super);
+
+        $super = [
+            'role_name' => 'part-time staff'
+        ];
+        DB::table('roles')->insert($super);
+
+        $super = [
+            'role_name' => 'Cashier'
+        ];
+        DB::table('roles')->insert($super);
     }
 
     /**
@@ -27,6 +46,6 @@ class CreateRoleTable extends Migration
      * @return void
      */
     public function down()    {
-        Schema::dropIfExists('role');
+        Schema::dropIfExists('roles');
     }
 }

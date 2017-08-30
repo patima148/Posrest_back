@@ -4,34 +4,37 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\UserElegant as UserElegant;
 
 class User extends Authenticatable
 {
     use Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','role_id'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
+    protected $rules = array(
+        'name' => 'required',
+        'email' => 'required',
+        'role_id' => 'required',
+        'branch_id' => 'required'
+    );
+
     protected $hidden = [
         'password', 'remember_token',
     ];
 
-    function Brewer()
+    function Role()
     {
-        return $this->hasMany('App\Brewing');
+        return $this->belongsTo('App\Role');
     }
-
-
+    function Branch()
+    {
+        return $this->belongsTo('App\Branch');
+    }
+    function Image()
+    {
+        return $this->belongsTo('App\Image');
+    }
 
 }

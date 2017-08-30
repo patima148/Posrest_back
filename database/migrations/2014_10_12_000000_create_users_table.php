@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -18,19 +18,19 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('phone_number');
-
+            $table->string('phone_number')->nullable();
+            $table->unsignedInteger('role_id')->foreign()
+                ->references('id')->on('role')
+                ->onDelete('cascade');
+            $table->unsignedInteger('branch_id')->foreign()
+                ->references('id')->on('branch')
+                ->onDelete('cascade');
+            $table->unsignedInteger('image_id')->foreign()
+                ->references('id')->on('image')
+                ->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });
-
-        $super = [
-            'name' => 'Kam',
-            'email' => 'kam@cmu.ac.th',
-            'password' => bcrypt('hahaha'),
-            'phone_number' => '0900000000'
-        ];
-        DB::table('users')->insert($super);
     }
 
     /**

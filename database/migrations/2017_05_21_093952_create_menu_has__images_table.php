@@ -13,16 +13,6 @@ class CreateMenuHasImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('menu_has__images', function (Blueprint $table) {
-            $table->increments('id');
-
-            $table->integer('image_id')->foreign()
-                ->references('id')->on('images');
-            $table->integer('menu_id')->foreign()
-                ->references('id')->on('menus');
-
-            $table->timestamps();
-        });
     }
 
     /**

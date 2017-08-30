@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
 use App\Service\UserService;
-
 class UserController extends Controller
 {
-
     private $service;
 
     function __construct(UserService $userService)
@@ -23,8 +20,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::All();
-        return $users;
+        $user = $this->service->getAll();
+        return response()->json($user);
         //
     }
 
@@ -46,18 +43,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->all();
-        $user = new User();
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->password = bcrypt($request->password);
-            $user->phone_number = $request->phone_number;
-            $user->save();
-
-
-
-            return response()->json($user);
-
+        $user = $this->service->store($request);
+        return response()->json($user);
     }
 
     /**
@@ -68,7 +55,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = $this->service->getById($id);
+        $user = $this->service->getByUserId($id);
         return response()->json($user);
     }
 
@@ -92,7 +79,8 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = $this->service->update($request, $id);
+        return response()->json($user);
     }
 
     /**
@@ -103,6 +91,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = $this->service->delete($id);
+        return response()->json($user);
     }
 }

@@ -15,12 +15,7 @@ class CreateMenusTable extends Migration
     {
         Schema::create('menus', function(Blueprint $table){
         $table->increments('id');
-        $table->string('name',50);
-        $table->double('sell_price',5,2);
-        $table->integer('ingredient_of_menu_id')->foreign()
-            ->references('id')->on('materials_of_menus');
-        $table->integer('menu_type_id')->foreign()
-            ->references('id')->on('menu_types');
+        $table->string('name');
 
         $table->timestamps();
     });

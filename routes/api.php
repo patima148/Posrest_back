@@ -29,14 +29,10 @@ Route::post('ingredient/{id}','IngredientController@store',[
 Route::get('ingredient/{id}','IngredientController@show',[
     //'middleware' => 'jwt.aut'
 ]);
-Route::put('ingredient/{id}/{TypeId}','IngredientController@update',[
-    //'middleware' => 'jwt.aut'
-]);
-Route::put('ingredient/{id}','IngredientController@update',[
+Route::put('ingredient/{id}/{branch_id}','IngredientController@update',[
     //'middleware' => 'jwt.aut'
 ]);
 //-------------------------------------------------------------------------------
-
 
 Route::resource('menu','MenuController',[
     //'middleware' => 'jwt.aut'
@@ -44,12 +40,18 @@ Route::resource('menu','MenuController',[
 
 Route::resource('image','ImageController');
 
-Route::resource('ingredient_type','IngredientTypeController');
-Route::resource('ingredient_type/{id}','IngredientTypeController@show');
+Route::get('user/id/{id}','UserController@show');
+Route::get('user/name/{name}','UserController@showByName');
+Route::resource('user', 'UserController');
+Route::post('user', 'UserController@store');
+Route::put('user/id', 'UserController@update');
+Route::post('add/branch', 'BranchController@store');
+Route::resource('branch', 'BranchController');
+Route::get('branch/{id}', 'BranchController@getById');
 
-/*Route::GET('material/{id}','MaterialController@showById',[
-    'middleware' => 'jwt.auth'
-]);*/
+Route::post('add/menu', 'MenuController@store');
+
+
 
 
 

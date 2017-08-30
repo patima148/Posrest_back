@@ -6,10 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ingredient extends Model
 {
-    public function IngredientType()
+    protected $fillable = [
+        'name','price','type','branch_id'
+    ];
+
+
+    public function Menu()
     {
-        return $this->belongsToMany('App\IngredientType')->withPivot('price')->withTimestamps();
+        return $this->belongsToMany('App\Menu');
+    }
+
+    public function Branch()
+    {
+        return $this->belongsToMany('App\Branch')->withPivot("price","type")
+            ->withTimestamps();
     }
 }
-
-

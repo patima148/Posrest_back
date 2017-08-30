@@ -2,26 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Branch;
 use Illuminate\Http\Request;
-use App\MaterialsOfMenu;
-use App\Service\MaterialsOfMenuService;
-class MaterialsOfMenuController extends Controller
+use App\Service\BranchesService;
+
+class BranchController extends Controller
 {
 
     private $service;
-    function __construct(MaterialsOfMenuService $materialsOfMenu)
+    function __construct(BranchesService $branchService)
     {
-        $this->service=$materialsOfMenu;
+        $this->service = $branchService;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $branch = $this->service->getAll();
+        return response()->json($branch);
     }
 
     /**
@@ -42,39 +39,41 @@ class MaterialsOfMenuController extends Controller
      */
     public function store(Request $request)
     {
-
+        $branch = $this->service->store($request);
+        return response()->json($branch);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Branch  $branch
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        $branch = $this->service->getById($id);
+        return response()->json($branch);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Branch  $branch
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Branch $branch)
     {
-        //
+
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Branch  $branch
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Branch $branch)
     {
         //
     }
@@ -82,11 +81,11 @@ class MaterialsOfMenuController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Branch  $branch
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Branch $branch)
     {
-        //
+
     }
 }
