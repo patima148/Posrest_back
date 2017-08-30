@@ -8,7 +8,6 @@
 
 namespace App\Service;
 use App\Image;
-
 use Illuminate\Http\Request;
 
 class ImageService
@@ -51,5 +50,26 @@ class ImageService
         return $image;
     }
 
+    public function update(Request $request,$id)
+    {
+        $image = Image::with("User", "Menu")->where('id',$id)->get()->first();
+
+        $file_name = time().'.'.$request->file->getClientOriginalExtension();
+        $request->file->move(public_path('images'), $file_name);
+
+
+        $image->file_name = $file_name;
+
+        $image->save();
+
+        return $image;
+    }
+
+    public function delete($id)
+    {
+        Image::destroy($id);
+        $image = Image::with("User", "Menu")->get();
+        return response()->json($image);
+    }
 
 }

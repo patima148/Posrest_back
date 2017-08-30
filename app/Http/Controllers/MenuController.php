@@ -2,26 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\MaterialsOfMenu;
-use App\Menus;
+use App\Menu;
 
-use App\Service\MaterialOfMenuService;
+use App\Service\BranchesService;
 use App\Service\MenuService;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
 {
     private $service;
-    private $serviceMatOfMenu;
-    function __construct(MenuService $menuService, MaterialOfMenuService $materialOfMenuService)
+    function __construct(MenuService $menuService)
     {
         $this->service = $menuService;
-        $this->serviceMatOfMenu = $materialOfMenuService;
     }
 
 
     public function index (){
-        $Menu = Menus::all();
+        $Menu = $this->service->getAll();
         return $Menu;
     }
 
@@ -32,10 +29,8 @@ class MenuController extends Controller
 
     public function store(Request $request)
     {
-      $m = $this->service->store($request);
-      $matofmenu = $this->serviceMatOfMenu->storeMatOfMenu($request);
-
-       return response()->json([$m,$matofmenu]);
+        $menu = $this->service->store($request);
+        return response()->json($menu);
     }
 
     public function show($id)

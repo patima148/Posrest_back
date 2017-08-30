@@ -13,7 +13,7 @@
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
-        "mockery/mockery": "0.9.*",
+        "mockery/mockery": "dev-master@dev",
         "phpunit/phpunit": "~5.7"
     },
     "autoload": {

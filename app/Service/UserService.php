@@ -1,33 +1,87 @@
 <?php
-
 /**
  * Created by PhpStorm.
  * User: HOME
- * Date: 20/5/2560
- * Time: 18:33
+ * Date: 28/7/2560
+ * Time: 16:21
  */
-class UserService
+
+namespace App\Service;
+use App\Branch;
+use App\Http\Controllers\Controller;
+use App\User;
+use App\Role;
+use App\Image;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
+
+class UserService extends Controller
 {
     private $model;
-
-    function __construct(User $user)
+    private $model2;
+    private $model3;
+    private $model4;
+    function __construct(User $user, Role $role, Branch $branch, Image $image)
     {
         $this->model = $user;
+        $this->model2 = $role;
+        $this->model3 = $branch;
+        $this->model4 = $image;
     }
 
-    function getById($id){
-        $user = $this->model->with([
-
-        ])->where('user_id',$id);
-        return $user;
-    }
-
-    function getByName($name)
+    public function getAll()
     {
-        $user = $this->model->with([
-
-        ])->where('name',$name)->first;
+        $user = User::with("Role","Branch", "Image")->get();
         return $user;
     }
 
+    static function getByUserId($id){
+        $user = User::with("Role","Branch","Image")->get()->where('id',$id)->first();
+        return $user;
+    }
+
+    function store(Request $input)
+        {
+            $result = false;
+            $image = new Image();
+            $file_name = time().'.'.$input->file->getClientOriginalExtension();
+            $input->file->move(public_path('images'), $file_name);
+            $image->file_name = $file_name;
+            $image->save();
+            $user = new User();
+            $user->name = $input['name'];
+            $user->email = $input['email'];
+            $user->password = bcrypt($input['password']);
+            $user->phone_number = $input['phone_number'];
+            $user->role_id  = $input['role_id'];
+            $user->branch_id  = $input['branch_id'];
+            $user->image_id = Image::get(['id'])->pluck("id")->last();
+            if($user->save()){
+                $result = true;
+        }
+            return $result;
+    }
+
+    function update(Request $request, $id)
+    {
+        $user = User::find($id);
+        $user->name = $request['name'];
+        $user->email = $request['email'];
+        $user->password = bcrypt($request['password']);
+        $user->phone_number = $request['phone_number'];
+        $user->role_id  = $request['role_id'];
+        $user->branch_id  = $request['branch_id'];
+        //$user->name = $request->name;
+        //$user->image_id = Image::get(['id'])->pluck("id")->last();
+        $user->update();
+        return response()->json($user);
+    }
+
+    public function delete($id)
+    {
+        User::destroy($id);
+        $user = User::with("IngredientType")->get();
+        return response()->json($user);
+    }
 }

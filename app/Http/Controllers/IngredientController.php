@@ -79,10 +79,10 @@ class IngredientController extends Controller
      * @param  \App\Ingredient  $ingredient
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id, $TypeId)
+    public function update(Request $request, $id, $branch_id)
     {
-        $ingredient = $this->service->update($request, $id, $TypeId);
-        return response()->json($ingredient);
+        $ingredient = $this->service->update($request, $id, $branch_id);
+        response()->json($ingredient);
     }
 
     /**

@@ -8,7 +8,7 @@
 
 namespace App\Service;
 use App\Ingredient;
-use App\IngredientType;
+use App\Branch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -16,64 +16,78 @@ use Illuminate\Support\Facades\DB;
 class IngredientService
 {
 
-    private $model;
-    private $model2;
-    function __construct(Ingredient $ingredient, IngredientType $ingredientType)
+    private $modelIngredient;
+    private $modelBranch;
+    function __construct(Ingredient $ingredient, Branch $branch)
     {
-        $this->model = $ingredient;
-        $this->model2 = $ingredientType;
+        $this->modelIngredient = $ingredient;
+        $this->modelBranch = $branch;
     }
 
-    public function store(Request $request, $id){
+    public function find($id)
+    {
+        if(!is_numeric($id)) {
+            return null;
+        }
+        return $this->modelIngredient->find($id);
+    }
+
+    public function store(Request $request, $id ){
         $ingredient = new Ingredient();
         $ingredient->name = $request['name'];
-        $price = $request->price;
-        $ingredient->save();
+        $price = $request['price'];
+        $type = $request['type'];
+        if($ingredient->save())
+        {
 
-        $ingredient->IngredientType()->attach($id, ['price'=>$price]);
-
-        $ingredients = Ingredient::with("IngredientType")->get();
+            $ingredient->Branch()->attach($id, ['price'=>$price], ['type'=>$type]);
+        }
+        $ingredients = Ingredient::with("Branch")->get();
 
         return $ingredients;
     }
 
     public function getById($id)
     {
-        $ingredient = $this->model->with([
-            "IngredientType"
+        $ingredient = $this->modelIngredient->with([
+            "Branch"
         ])->where('id',$id)->first();
+       /* $ingredient = $this->modelIngredient->find($id);
+        $branch = $this->modelBranch->find($id);
+        $ingredient['branch']= $branch;*/
         return $ingredient;
     }
 
     public function getAll()
     {
-        $ingredients = Ingredient::with("IngredientType")->get();
+        $ingredients = Ingredient::with("Branch")->get();
         return $ingredients;
     }
 
-    public function update(Request $request, $id, $TypeId)
+    public function update(Request $request, $id, $branch_id)
     {
-        $ingredient = Ingredient::find($id);
-        $ingredient->name = $request['name'];
-        $price = $request->price;
-        $ingredient->save();
+        $ingredient = Ingredient::with("Branch")->get()->where('id',$id)->first();
 
-        $ingredient->IngredientType()->updateExistingPivot($TypeId, ['price'=>$price]);
-
-        $ingredient = Ingredient::with("IngredientType")->get();
+        $ingredient->name = $request->name;
+        $price = $request['price'];
+        $type = $request['type'];
+        if($ingredient->save())
+        {
+            $ingredient->Branch()->attach($branch_id, ['price'=>$price], ['type'=>$type]);
+        }
+        $ingredients = Ingredient::with("Branch")->get();
 
         return $ingredient;
-
-        /**App\Flight::where('active', 1)
-           * ->where('destination', 'San Diego')
-           * ->update(['delayed' => 1]);*/
     }
 
 
     public function delete($id)
     {
-        Ingredient::destroy($id);
-        $ingredients = Ingredient::with("IngredientType")->get();
-        return response()->json($ingredients);
+        $result = false;
+        if (Ingredient::destroy($id))
+        {
+            $result = true;
+        }
+        return $result;
     }
  }

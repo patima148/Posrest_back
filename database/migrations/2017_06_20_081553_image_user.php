@@ -18,10 +18,10 @@ class ImageUser extends Migration
 
             $table->integer('user_id')->foreign()
                 ->reference('id')->on('users')
-                ->onDelete('cascade');
+                ->onDelete('cascade')->nullable;
             $table->integer('image_id')->foreign()
                 ->reference('id')->on('images')
-                ->onDelete('cascade');
+                ->onDelete('cascade')->nullable;
             $table->timestamps();
         });
     }
