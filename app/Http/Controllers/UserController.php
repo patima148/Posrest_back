@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Service\ImageService;
 use Illuminate\Http\Request;
 use App\Service\UserService;
 class UserController extends Controller
 {
-    private $service;
-
-    function __construct(UserService $userService)
+    private $userService;
+    private $imageService;
+    function __construct(UserService $userService, ImageService $imageService)
     {
-        $this->service = $userService;
+        $this->userService = $userService;
+        $this->imageService = $imageService;
     }
 
     /**
@@ -20,7 +22,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = $this->service->getAll();
+        $user = $this->userService->getAll();
         return response()->json($user);
         //
     }
@@ -43,7 +45,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = $this->service->store($request);
+        $this->imageService->store($request);
+        $user = $this->userService->store($request);
         return response()->json($user);
     }
 

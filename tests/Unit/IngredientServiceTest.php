@@ -8,6 +8,7 @@
 
 namespace Tests\Unit;
 use App\Branch;
+use Illuminate\Http\Request;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -16,6 +17,9 @@ use Illuminate\Database\Eloquent\Model;
 use App\Service\IngredientService;
 use Illuminate\Database\Eloquent\Collection;
 use App\Ingredient;
+use Tests\Unit\MockIngredientRequest;
+use Tests\Unit\MockIngredientRequestFailCase;
+use Mockery;
 
 
 class IngredientServiceTest extends TestCase
@@ -35,46 +39,64 @@ class IngredientServiceTest extends TestCase
 
     public function mock($class)
     {
-        $mock = \Mockery::mock($class);
+        $mock = Mockery::mock($class);
         $this->app->instance($class, $mock);
         return $mock;
     }
 
     public function test_getAll()
     {
-        $this->mockIngredient->shouldReceive('with')->with("User")
+        $this->mockIngredient->shouldReceive('with')->with("Branch")
             ->shouldReceive('getAll')->andReturn(new Collection());
         $actual = $this->service->getAll();
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection',$actual);
-/*
-        $this->mockIngredient->shouldReceive('getAll')->andReturn(null);
+
+        $this->mockIngredient->shouldReceive('with')->with("Branch")
+            ->shouldReceive('getAll')->andReturn($this->test_data);
         $actual = $this->service->getAll();
-        $this->assertNotNull($actual);*/
-    }
+        $this->assertNotEmpty($actual);
 
-
-    public function test_getById()
-    {
-        /*$test = $this->mockIngredient->shouldReceive('with', 'getById')
-            ->with('Branch',$this->service->getById(1))->andReturn([
-            'id'=> '1',
-            'name' => "Apple",
-            'branch'=> [
-                'name' => "Maya mall" ]
-        ]);*/
-        $test = $this->mockIngredient->shouldReceive('with')->with('Branch')->andReturn($this->mockIngredient)
-            ->shouldReceive('getById')->with('1')->andReturn($this->test_data[1]);
-        ;
-        $actual = $this->service->getById(1);
-        $this->assertEquals($test,$actual);
+        // With out any data
+        $test = $this->mockIngredient->shouldReceive('with')->with("Branch")
+            ->shouldReceive('getAll')->andReturn($this->test_data[1]);
+        $actual = $this->service->getAll();
+        $this->assertNotEquals($test,$actual);
     }
 
     public function test_delete()
     {
-        $actual=$this->service->delete(1);
+        $actual=$this->service->delete(10);
         $this->assertTrue($actual);
+
+        //With incorrect case
+        $actual=$this->service->delete(99);
+        $this->assertFalse($actual);
     }
-    private $test_data = array(['id'=>'1','name'=>'Milk','branch_id'=>'1'],[]);
+
+    public function test_store()
+    {
+        $mockIngredient = new MockIngredientRequest();
+        $actual=$this->service->store($mockIngredient,1);
+        $this->assertTrue($actual);
+
+        //With incorrect case
+        $mockIngredient = new MockIngredientRequestFailCase();
+        $actual=$this->service->store($mockIngredient,1);
+        $this->assertFalse($actual);
+    }
+
+    public function test_getById()
+    {
+        /*$actual = $this->service->getById(3);
+        $this->assertArrayHasKey($this->test_data,$actual);*/
+    }
+
+    public function test_update()
+    {
+
+    }
+
+    private $test_data = array(['id'=>'3','name'=>'Milk','branch_id'=>'2'],[]);
     private $test_data2 = array(['id'=> 2, "name"=> "Milk",]);
 }
 

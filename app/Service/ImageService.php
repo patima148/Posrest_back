@@ -22,17 +22,11 @@ class ImageService
      * @return Image
      */
     public function store(Request $request)
-    {
-        $image = new Image();
-
+    {   $image = new Image();
         $file_name = time().'.'.$request->file->getClientOriginalExtension();
         $request->file->move(public_path('images'), $file_name);
-
-
         $image->file_name = $file_name;
-
         $image->save();
-
         return $image;
     }
 

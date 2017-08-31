@@ -8,14 +8,11 @@
 
 namespace Tests\Unit;
 use App\Service\UserService;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Facade;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Collection;
-use App\User;
+use Tests\Unit\MockUserRequest;
+use Mockery;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 
 class UserServiceTest extends TestCase
@@ -26,6 +23,8 @@ class UserServiceTest extends TestCase
     private $mockRole;
     private $mockBranch;
     private $mockImage;
+    private $mockTask;
+
     public function setUp()
     {
         parent::setUp();
@@ -39,7 +38,7 @@ class UserServiceTest extends TestCase
 
     public function mock($class)
     {
-        $mock = \Mockery::mock($class);
+        $mock = Mockery::mock($class);
         $this->app->instance($class, $mock);
         return $mock;
     }
@@ -52,17 +51,10 @@ class UserServiceTest extends TestCase
 
     public function test_store()
     {
-        $request = new Request();
-        $actual = new User();
-        $request = $this->test_data[0];
-        $actual = $this->service->store($request);
-        $this->assertTrue($actual);
+        $mockUser = new MockUserRequest();
+        $actual=$this->service->store($mockUser);
+        $this->assertFalse($actual);
     }
 
-    private $test_data = array(['name'=>'Jam',
-                                'email'=>'Paisan@cmu.ac.th',
-                                'password'=>'123456',
-                                'phone_number'=>'0833221934','role_id'=>'4',
-                                'branch_id'=>'1', /*'file'=>'7123658459.jpg'*/],
-                                 []);
+
 }

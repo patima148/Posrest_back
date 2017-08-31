@@ -1,11 +1,13 @@
 <?php
 namespace App\Service;
 
+use App\Image;
 use App\Ingredient;
 use App\Menu;
 use App\Branch;
 use App\BranchIngredient;
 use Illuminate\Http\Request;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -18,13 +20,14 @@ class MenuService
 {
     private $modelMenu;
     private $modelBranch;
-    private $modelBranchIngredient;
-
-    function __construct(Menu $menu, Branch $branch, BranchIngredient $branchIngredient)
+    private $modelImage;
+    private $modelIngredient;
+    function __construct(Menu $menu, Branch $branch, Ingredient $ingredient, Image $image)
     {
         $this->modelMenu = $menu;
         $this->modelBranch = $branch;
-        $this->modelBranchIngredient = $branchIngredient;
+        $this->modelIngredient = $ingredient;
+        $this->modelImage = $image;
     }
 
     function store(Request $request)
@@ -36,7 +39,7 @@ class MenuService
         $type = $request['type'];
         $grade = $request['grade'];
         $BranchId = $request['BranchId'];
-
+        $menu->image_id = $this->modelImage->get(['id'])->pluck("id")->last();
 
 
         if($menu->save())
@@ -44,7 +47,7 @@ class MenuService
             $menu->Branch()->attach($BranchId, ['price'=>$price], ['type'=>$type], ['grade'=>$grade]);
 
         }
-        $menu = Menu::with("Branch")->get();
+        $menu = $this->modelMenu->with("Branch", "Image")->get();
 
         return $menu;
     }
@@ -56,7 +59,7 @@ class MenuService
 
     function getAll()
     {
-        $menu = Menu::with("Branch")->get();
+        $menu = $this->modelMenu->with("Branch","Image")->get();
         return $menu;
     }
 
