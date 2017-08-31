@@ -18,16 +18,16 @@ use Illuminate\Support\Facades\DB;
 
 class UserService extends Controller
 {
-    private $model;
-    private $model2;
-    private $model3;
-    private $model4;
+    private $modelUser;
+    private $modelRole;
+    private $modelBranch;
+    private $modelImage;
     function __construct(User $user, Role $role, Branch $branch, Image $image)
     {
-        $this->model = $user;
-        $this->model2 = $role;
-        $this->model3 = $branch;
-        $this->model4 = $image;
+        $this->modelUser = $user;
+        $this->modelRole = $role;
+        $this->modelBranch = $branch;
+        $this->modelImage = $image;
     }
 
     public function getAll()
@@ -44,22 +44,20 @@ class UserService extends Controller
     function store(Request $input)
         {
             $result = false;
-            $image = new Image();
-            $file_name = time().'.'.$input->file->getClientOriginalExtension();
-            $input->file->move(public_path('images'), $file_name);
-            $image->file_name = $file_name;
-            $image->save();
             $user = new User();
             $user->name = $input['name'];
+            if($user==null){
+                return $result;
+            }
             $user->email = $input['email'];
             $user->password = bcrypt($input['password']);
             $user->phone_number = $input['phone_number'];
             $user->role_id  = $input['role_id'];
             $user->branch_id  = $input['branch_id'];
-            $user->image_id = Image::get(['id'])->pluck("id")->last();
-            if($user->save()){
-                $result = true;
-        }
+            $user->image_id = Image::with([])->get(['id'])->pluck("id")->last();
+            $user->save();
+            $result = true;
+
             return $result;
     }
 

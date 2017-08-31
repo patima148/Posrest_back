@@ -33,18 +33,22 @@ class IngredientService
     }
 
     public function store(Request $request, $id ){
+        $result = false;
         $ingredient = new Ingredient();
-        $ingredient->name = $request['name'];
-        $price = $request['price'];
-        $type = $request['type'];
+        $ingredient->name = $request->name;
+        if($ingredient->name==null)
+        {
+            return $result;
+        }
+        $price = $request->price;
+        $type = $request->type;
         if($ingredient->save())
         {
-
             $ingredient->Branch()->attach($id, ['price'=>$price], ['type'=>$type]);
+            $result = true;
         }
-        $ingredients = Ingredient::with("Branch")->get();
 
-        return $ingredients;
+        return $result;
     }
 
     public function getById($id)
@@ -52,7 +56,7 @@ class IngredientService
         $ingredient = $this->modelIngredient->with([
             "Branch"
         ])->where('id',$id)->first();
-       /* $ingredient = $this->modelIngredient->find($id);
+        /*$ingredient = $this->modelIngredient->find($id);
         $branch = $this->modelBranch->find($id);
         $ingredient['branch']= $branch;*/
         return $ingredient;

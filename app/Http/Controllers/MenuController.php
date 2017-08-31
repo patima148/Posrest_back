@@ -6,14 +6,17 @@ use App\Menu;
 
 use App\Service\BranchesService;
 use App\Service\MenuService;
+use App\Service\ImageService;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
 {
     private $service;
-    function __construct(MenuService $menuService)
+    private $imageService;
+    function __construct(MenuService $menuService, ImageService $imageService)
     {
         $this->service = $menuService;
+        $this->imageService = $imageService;
     }
 
 
@@ -29,6 +32,7 @@ class MenuController extends Controller
 
     public function store(Request $request)
     {
+        $this->imageService->store($request);
         $menu = $this->service->store($request);
         return response()->json($menu);
     }

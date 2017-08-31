@@ -16,7 +16,9 @@ class CreateMenusTable extends Migration
         Schema::create('menus', function(Blueprint $table){
         $table->increments('id');
         $table->string('name');
-
+        $table->unsignedInteger('image_id')->foreign()
+                ->references('id')->on('image')
+                ->onDelete('cascade');
         $table->timestamps();
     });
 

@@ -25,4 +25,9 @@ class Menu extends Model
         return $this->belongsTo('App\BranchMenu','branch_menu_ingredient');
     }
 
+    function Image()
+    {
+        return $this->belongsTo('App\Branch', 'image_menu');
+    }
+
 }

@@ -10,4 +10,9 @@ class Image extends Model
     {
         return $this->belongsToMany('App\User');
     }
+    public function Menu()
+    {
+        return $this->belongsToMany('App\Menu');
+    }
+
 }
