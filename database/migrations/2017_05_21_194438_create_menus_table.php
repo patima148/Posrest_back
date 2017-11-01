@@ -21,7 +21,6 @@ class CreateMenusTable extends Migration
                 ->onDelete('cascade');
         $table->timestamps();
     });
-
     }
 
     /**
