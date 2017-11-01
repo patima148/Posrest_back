@@ -10,7 +10,9 @@ namespace App\Service;
 
 
 use App\Menu;
+use App\BranchMenu;
 use App\Order;
+
 
 class OrderService
 {
@@ -32,15 +34,64 @@ class OrderService
         {
             $menuId = $data['menu'];
             $numOfmenu = count($menuId);
+            $menu = [];
+            $totalprice = (float)0.00;
+            foreach ($menuId as $value){
+                $price = BranchMenu::with([])
+                    ->where('menu_id', $value)
+                    ->where('branch_id',  $Order->branch_id)
+                    ->value('price');
 
-            /*foreach ($menuId as $value){
-                $price = Menu::with(['branch'])
-                    ->where('id', $value)
-                    ->get('price')->pluck('price');
-                $total = $total + $price;
-            }*/
-            $menu = Menu::with(['branch'])->where('id',$menuId[1])->get();
-            return $menu;
+                $totalprice += $price;
+            }
+            $Order->price = $totalprice;
+            $Order->table = $data['table'];
+            $Order->NumberOfMenu = $numOfmenu;
+            if($Order->save())
+            {
+                return true;
+            }
+            //$menu = Menu::with(['branch'])->where('id',$menuId[1])->get();
+
+        }
+        return false;
+    }
+
+    function update(array $data, $id)
+    {
+        $result = false;
+        $Order = Order::find($id);
+        $Order->branch_id = $data['branch_id'];
+        if (isset($data['status']))
+        {
+            $Order->status  = $data['status'];
+        }
+
+        $total = 0;
+
+        if(isset($data['menu']))
+        {
+            $menuId = $data['menu'];
+            $numOfmenu = count($menuId);
+            $menu = [];
+            $totalprice = (float)0.00;
+            foreach ($menuId as $value){
+                $price = BranchMenu::with([])
+                    ->where('menu_id', $value)
+                    ->where('branch_id',  $Order->branch_id)
+                    ->value('price');
+
+                $totalprice += $price;
+            }
+            $Order->price = $totalprice;
+            $Order->table = $data['table'];
+            $Order->NumberOfMenu = $numOfmenu;
+            if($Order->save())
+            {
+                return true;
+            }
+            //$menu = Menu::with(['branch'])->where('id',$menuId[1])->get();
+
         }
         return false;
     }

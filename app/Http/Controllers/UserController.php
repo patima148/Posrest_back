@@ -47,7 +47,7 @@ class UserController extends Controller
     {
         $this->imageService->store($request);
         $user = $this->userService->store($request->input());
-        return response()->json($user);
+        return response()->request->input();
     }
 
     /**

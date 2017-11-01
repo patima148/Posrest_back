@@ -44,51 +44,13 @@ class IngredientServiceTest extends TestCase
         return $mock;
     }
 
-    public function test_getAll()
+
+    public function test_fake()
     {
-       /* $this->mockIngredient->shouldReceive('with')->with("Branch")
-            ->shouldReceive('getAll')->andReturn(new Collection());
-        $actual = $this->service->getAll();
-        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection',$actual);*/
-
-        $this->mockIngredient->shouldReceive('with')->with("Branch")
-            ->shouldReceive('getAll')->andReturn($this->test_data);
-        $actual = $this->service->getAll();
-        $this->assertNotEmpty($actual);
-
-        // With out any data
-        $test = $this->mockIngredient->shouldReceive('with')->with("Branch")
-            ->shouldReceive('getAll')->andReturn($this->test_data[1]);
-        $actual = $this->service->getAll();
-        $this->assertNotCount(0,$actual);
-    }
-
-    public function test_delete()
-    {
-        $actual=$this->service->delete(7);
-        $this->assertTrue($actual);
-
-        //With incorrect case
-        $actual=$this->service->delete(99);
-        $this->assertFalse($actual);
-    }
-
-    public function test_store()
-    {
-        $mockIngredient = new MockIngredientRequest();
-        $actual=$this->service->store($mockIngredient,1);
-        $this->assertTrue($actual);
-
-        //With incorrect case
-        $mockIngredient = new MockIngredientRequestFailCase();
-        $actual=$this->service->store($mockIngredient,1);
-        $this->assertFalse($actual);
-    }
-
-    public function test_getById()
-    {
-        /*$actual = $this->service->getById(3);
-        $this->assertArrayHasKey($this->test_data,$actual);*/
+        $this->assertEquals(
+            'user@example.com',
+            'user@example.com'
+        );
     }
 
     public function test_update()

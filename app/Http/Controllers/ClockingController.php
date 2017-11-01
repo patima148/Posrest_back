@@ -78,11 +78,11 @@ class ClockingController extends Controller
      * @param  \App\Clocking  $clocking
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $userid, $branchid)
+    public function update(Request $request,$user_id)
     {
 
-        $clock_out = $this->ClockingService->clock_out($request->input());
-        //$clocking = $this->ClockingService->clockingSummary($request->input());
+        $clock_out = $this->ClockingService->clock_out($request->input(), $user_id);
+        //$clocking = $this->ClockingService->clockingSummary($request->input(), $user_id);
         return response()->json($clock_out);
     }
 

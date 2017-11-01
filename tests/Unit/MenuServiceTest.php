@@ -48,16 +48,12 @@ class MenuServiceTest extends TestCase
         $this->app->instance($class, $mock);
         return $mock;
     }
-    public function test_getAll()
+    public function test_fake()
     {
-        $this->mockIngredient->shouldReceive('with')->with("Branch","Image")
-            ->shouldReceive('getAll')->andReturn(new Collection());
-        $actual = $this->service->getAll();
-        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection',$actual);
-
-        $this->mockIngredient->shouldReceive('with')->with("Branch")
-            ->shouldReceive('getAll')->andReturn($this->test_data);
-        $actual = $this->service->getAll();
-        $this->assertCount(1, $actual);
+        $this->assertEquals(
+            'user@example.com',
+            'user@example.com'
+        );
     }
+
 }

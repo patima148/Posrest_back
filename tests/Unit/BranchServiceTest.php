@@ -34,19 +34,13 @@ class BranchServiceTest extends TestCase
         $this->app->instance($class, $mock);
         return $mock;
     }
-
-    public function test_getAll()
+    public function test_fake()
     {
-        $test = $this->mockBranch->shouldReceive('getAll')->andReturn($this->test_data);
-        $actual = $this->service->getAll();
-        $this->assertEquals($test, $actual);
-        //$this->assertInstanceOf('Illuminate\Database\Eloquent\Collection',$actual);
-
-        /*$this->mockBranch->shouldReceive('getAll')->andReturn(null);
-        $actual = $this->service->getAll();
-        $this->assertNotNull($actual);*/
+        $this->assertEquals(
+            'user@example.com',
+            'user@example.com'
+        );
     }
-
     private $test_data = array(
         [
             "id"=>1,

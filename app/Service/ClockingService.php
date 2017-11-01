@@ -36,41 +36,25 @@ class ClockingService
     }
 
 
-    function clock_out(array $data)
+    function clock_out(array $data, $user_id)
     {
-        if(isset($data['user_id']))
-        {
-
-            if(isset($data['branch_id']))
-            {
-                $clocking = Clocking::with('user','branch')
-                    ->where('user_id',$data['user_id'])
-                    ->where('branch_id', $data['branch_id'])
-                    ->where('clockOut_time',null)->get()->last();
-                $clocking->clockOut_time = Carbon::now();
-                $clocking->save();
-                return $clocking;
-            }
-        }
-        return $data;
-    }
-
-    function clockingSummary(array $data)
-    {
-        $clocking = $clocking = Clocking::with('user','branch')
-            ->where('user_id',$data['user_id'])
-            ->where('branch_id', $data['branch_id'])
-            ->where('clockOut_time',null)->get()->last();
-        if(isset($data['user_id'])&&$data['branch_id'])
-        $from = ClockIn::with([])->where('user_id',$data['user_id'])->pluck('clockIn_time')->last();
-        $to = ClockOut::with([])->where('user_id',$data['user_id'])->pluck('clockOut_time')->last();
+        $clocking = Clocking::find($user_id);/*
+        $clocking->clockOut_Time = Carbon::now();
+        $clocking->save();
+        $testfrom = Clocking::with([])->where('user_id',$data['user_id'])->value('clockIn_time');
+        $to = Clocking::with([])->where('user_id',$data['user_id'])->value('clockOut_time');
         $from = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', '2017-9-22 14:38:54');
         $to = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', '2017-9-22 20:30:54');
         $clocking->totalDuration_hour = $to->diffInHours($from);
         $clocking->workingDuration_Min = $to->diffInMinutes($from);
         $clocking->payRate = $data['payRate'];
-        $clocking->save();
-        return $clocking;
+        $clocking->save();*/
+        return  $clocking ;
+
+    }
+
+    function clockingSummary(array $data, $user_id)
+    {
     }
 
     function setPaymentRate($id, $newRate)

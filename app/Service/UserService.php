@@ -37,7 +37,8 @@ class UserService extends Controller
     }
 
     static function getByUserId($id){
-        $user = User::with("Role","Branch","Image","Clocking.ClockIn","Clocking.ClockOut")->get()->where('id',$id)->first();
+        //$user = User::with("Role","Branch","Image","Clocking.ClockIn","Clocking.ClockOut")->get()->where('id',$id)->first();
+        $user = User::find($id);
         return $user;
     }
 
@@ -64,10 +65,12 @@ class UserService extends Controller
     function update(array $data, $id)
     {
         $result = false;
-        $user = $this->modelUser->find($id);
-        if(isset($data['email'])) {
+        $user = User::find($id);
+
+        if(isset($data['email']))
+        {
             $user->email = $data['email'];
-            return $data['email'];
+
         }
         if(isset($data['password'])) {
             $user->password = bcrypt($data['password']);
@@ -85,7 +88,8 @@ class UserService extends Controller
             $user->image_id = Image::with([])->get(['id'])->pluck("id")->last();
         }
 
-        return $data;
+        $user->save();
+        return $user;
     }
 
     public function delete($id)

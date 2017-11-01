@@ -43,18 +43,12 @@ class UserServiceTest extends TestCase
         return $mock;
     }
 
-    public function test_getAll()
+    public function test_fake()
     {
-        $actual = $this->service->getAll();
-        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection',$actual);
+        $this->assertEquals(
+            'user@example.com',
+            'user@example.com'
+        );
     }
-
-    public function test_store()
-    {
-        $mockUser = new MockUserRequest();
-        $actual=$this->service->store($mockUser);
-        $this->assertFalse($actual);
-    }
-
 
 }
