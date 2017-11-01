@@ -21,7 +21,7 @@ class CreateBranchsTable extends Migration
             $table->timestamps();
         });
         $branch = ['name' => 'cmu', 'address' => '168/1'];
-        $db = DB::table('branches')->insert($branch);
+        DB::table('branches')->insert($branch);
     }
 
 
