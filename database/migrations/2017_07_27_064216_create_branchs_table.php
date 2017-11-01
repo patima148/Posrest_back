@@ -13,14 +13,17 @@ class CreateBranchsTable extends Migration
      */
     public function up()
     {
+
         Schema::create('branches', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
             $table->string('address');
             $table->timestamps();
         });
-
+        $branch = ['name' => 'cmu', 'address' => '168/2'];
+        DB::table('branches')->insert($branch);
     }
+
 
     /**
      * Reverse the migrations.
