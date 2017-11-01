@@ -20,13 +20,11 @@ class CreateClockingTable extends Migration
             $table->unsignedInteger('user_id')->foreign()
                 ->references('id')->on('users')
                 ->onDelete('cascade');
-            $table->unsignedInteger('clockIn_id')->foreign()
-                ->references('id')->on('clockIn');
-            $table->unsignedInteger('clockOut_id')->foreign()
-                ->references('id')->on('clockOut');
-            $table->float('workingDuration_Min')->nullable();
-            $table->float('totalDuration_Hour')->nullable();
-            $table->float('payRate');
+            $table->dateTime('clockIn_time');
+            $table->dateTime('clockOut_time')->nullable()->default(null);
+            $table->float('workingDuration_Min')->nullable()->default(null);
+            $table->float('totalDuration_Hour')->nullable()->default(null);
+            $table->float('payRate')->default("30.00");
             $table->timestamps();
         });
     }

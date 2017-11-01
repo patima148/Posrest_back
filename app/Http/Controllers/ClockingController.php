@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Clocking;
 use App\Service\ClockingService;
 use Illuminate\Http\Request;
 
@@ -42,7 +43,8 @@ class ClockingController extends Controller
      */
     public function store(Request $request)
     {
-
+        $clock_in = $this->ClockingService->clock_in($request->input());
+        return response()->json($clock_in);
     }
 
     /**
@@ -76,13 +78,12 @@ class ClockingController extends Controller
      * @param  \App\Clocking  $clocking
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $userid, $branchid)
     {
-        $input = $request->all();
-        $payrate = $this->ClockingService->setPaymentRate($id,$request->newRate);
-        return response()->json($payrate);
-       /* $clock_out = $this->ClockingService->clock_out($UserId);
-        return response()->json($clock_out);*/
+
+        $clock_out = $this->ClockingService->clock_out($request->input());
+        //$clocking = $this->ClockingService->clockingSummary($request->input());
+        return response()->json($clock_out);
     }
 
     /**

@@ -21,7 +21,6 @@ class CreateMenusTable extends Migration
                 ->onDelete('cascade');
         $table->timestamps();
     });
-
     }
 
     /**
@@ -34,3 +33,5 @@ class CreateMenusTable extends Migration
         Schema::dropIfExists('menus');
     }
 }
+
+
