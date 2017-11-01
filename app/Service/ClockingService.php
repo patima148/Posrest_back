@@ -26,33 +26,42 @@ class ClockingService
 
     function clock_in(array $data)
     {
-        $clockin = new ClockIn();
-        $clockin->user_id = $data['user_id'];
-        $clockin->branch_id = $data['branch_id'];
-        $clockin->clockIn_time = Carbon::now();
-        $clockin->save();
+        $clocking = new Clocking();
+        $clocking->user_id = $data['user_id'];
+        $clocking->branch_id = $data['branch_id'];
+        $clocking->clockIn_time = Carbon::now();
+        $clocking->save();
 
-        return $clockin;
+        return $clocking;
     }
 
 
     function clock_out(array $data)
     {
-        $clockOut = new ClockOut();
-        $clockOut->user_id = $data['user_id'];
-        $clockOut->branch_id = $data['branch_id'];
-        $clockOut->clockOut_time = Carbon::now();
-        $clockOut->save();
-        return $clockOut;
+        if(isset($data['user_id']))
+        {
+
+            if(isset($data['branch_id']))
+            {
+                $clocking = Clocking::with('user','branch')
+                    ->where('user_id',$data['user_id'])
+                    ->where('branch_id', $data['branch_id'])
+                    ->where('clockOut_time',null)->get()->last();
+                $clocking->clockOut_time = Carbon::now();
+                $clocking->save();
+                return $clocking;
+            }
+        }
+        return $data;
     }
 
     function clockingSummary(array $data)
     {
-        $clocking = new Clocking();
-        $clocking->branch_id = $data['branch_id'];
-        $clocking->user_id = $data['user_id'];
-        $clocking->clockIn_id = ClockIn::with([])->where('user_id',$data['user_id'])->get(['clockIn_id'])->pluck("clockIn_id")->last();
-        $clocking->clockOut_id = ClockOut::with([])->where('user_id',$data['user_id'])->get(['clockOut_id'])->pluck("clockOut_id")->last();
+        $clocking = $clocking = Clocking::with('user','branch')
+            ->where('user_id',$data['user_id'])
+            ->where('branch_id', $data['branch_id'])
+            ->where('clockOut_time',null)->get()->last();
+        if(isset($data['user_id'])&&$data['branch_id'])
         $from = ClockIn::with([])->where('user_id',$data['user_id'])->pluck('clockIn_time')->last();
         $to = ClockOut::with([])->where('user_id',$data['user_id'])->pluck('clockOut_time')->last();
         $from = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', '2017-9-22 14:38:54');

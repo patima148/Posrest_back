@@ -60,7 +60,7 @@ Route::post('clock-out','ClockOutController@store');
 Route::resource('clocking','ClockingController');
 Route::get('clocking/{user}','ClockingController@show');
 Route::post('payment','PaymentController@store');
-Route::put('clocking/{2}','ClockingController@update');
+Route::patch('clock-out/{userid}/{branchid}','ClockingController@update');
 
 
 Route::resource('Qoutes','QoutesController');
