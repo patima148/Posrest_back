@@ -16,10 +16,10 @@ class CreateBranchIngredientTable extends Migration
         Schema::create('branch_ingredient', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('branch_id')->foreign()
-                ->references('id')->on('branch')
+                ->references('id')->on('branches')
                 ->onDelete('cascade');
             $table->unsignedInteger('ingredient_id')->foreign()
-                ->references('id')->on('branch')
+                ->references('id')->on('branches')
                 ->onDelete('cascade');
             $table->decimal('price')->default("0.00");
             $table->string('type')->default("Normal");

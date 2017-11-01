@@ -46,7 +46,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->imageService->store($request);
-        $user = $this->userService->store($request);
+        $user = $this->userService->store($request->input());
         return response()->json($user);
     }
 
@@ -58,7 +58,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = $this->service->getByUserId($id);
+        $user = $this->userService->getByUserId($id);
         return response()->json($user);
     }
 
@@ -82,7 +82,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = $this->service->update($request, $id);
+        $user = $this->userService->update($request->input(), $id);
         return response()->json($user);
     }
 
@@ -94,7 +94,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = $this->service->delete($id);
+        $user = $this->userService->delete($id);
         return response()->json($user);
     }
 }

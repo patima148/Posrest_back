@@ -46,10 +46,10 @@ class IngredientServiceTest extends TestCase
 
     public function test_getAll()
     {
-        $this->mockIngredient->shouldReceive('with')->with("Branch")
+       /* $this->mockIngredient->shouldReceive('with')->with("Branch")
             ->shouldReceive('getAll')->andReturn(new Collection());
         $actual = $this->service->getAll();
-        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection',$actual);
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection',$actual);*/
 
         $this->mockIngredient->shouldReceive('with')->with("Branch")
             ->shouldReceive('getAll')->andReturn($this->test_data);
@@ -60,12 +60,12 @@ class IngredientServiceTest extends TestCase
         $test = $this->mockIngredient->shouldReceive('with')->with("Branch")
             ->shouldReceive('getAll')->andReturn($this->test_data[1]);
         $actual = $this->service->getAll();
-        $this->assertNotEquals($test,$actual);
+        $this->assertNotCount(0,$actual);
     }
 
     public function test_delete()
     {
-        $actual=$this->service->delete(10);
+        $actual=$this->service->delete(7);
         $this->assertTrue($actual);
 
         //With incorrect case

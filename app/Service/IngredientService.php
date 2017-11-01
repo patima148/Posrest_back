@@ -32,16 +32,16 @@ class IngredientService
         return $this->modelIngredient->find($id);
     }
 
-    public function store(Request $request, $id ){
+    public function store(array $input, $id ){
         $result = false;
         $ingredient = new Ingredient();
-        $ingredient->name = $request->name;
+        $ingredient->name = $input['name'];
         if($ingredient->name==null)
         {
             return $result;
         }
-        $price = $request->price;
-        $type = $request->type;
+        $price = $input['price'];
+        $type = $input['type'];
         if($ingredient->save())
         {
             $ingredient->Branch()->attach($id, ['price'=>$price], ['type'=>$type]);

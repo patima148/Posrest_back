@@ -13,13 +13,13 @@ class CreateBranchMenu extends Migration
      */
     public function up()
     {
-        Schema::create('branch_menu', function (Blueprint $table) {
+        Schema::create('branch_menus', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('branch_id')->foreign()
-                ->references('id')->on('branch')
+                ->references('id')->on('branches')
                 ->onDelete('cascade');
             $table->unsignedInteger('menu_id')->foreign()
-                ->references('id')->on('menu')
+                ->references('id')->on('menus')
                 ->onDelete('cascade');
             $table->string('type')->default("Brewing");
             $table->string('grade')->default("Normal");
@@ -35,6 +35,6 @@ class CreateBranchMenu extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('branch_menu');
+        Schema::dropIfExists('branch_menus');
     }
 }

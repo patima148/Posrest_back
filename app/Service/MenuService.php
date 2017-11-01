@@ -22,6 +22,7 @@ class MenuService
     private $modelBranch;
     private $modelImage;
     private $modelIngredient;
+
     function __construct(Menu $menu, Branch $branch, Ingredient $ingredient, Image $image)
     {
         $this->modelMenu = $menu;
@@ -30,24 +31,31 @@ class MenuService
         $this->modelImage = $image;
     }
 
-    function store(Request $request)
+    function store(array $input)
     {
-        $input = $request->all();
+        //$input = $input->all();
         $menu = new Menu();
-        $menu->name = $request['name'];
-        $price = $request['price'];
-        $type = $request['type'];
-        $grade = $request['grade'];
-        $BranchId = $request['BranchId'];
-        $menu->image_id = $this->modelImage->get(['id'])->pluck("id")->last();
-
-
+        $menu->name = $input['name'];
+        $price = $input['price'];
+        $type = $input['type'];
+        $grade = $input['grade'];
+        $BranchId = $input['BranchId'];
+        $menu->image_id = Image::with([])->get(['id'])->pluck("id")->last();
+        $ingredients = array($input['Ingredient']);
         if($menu->save())
         {
             $menu->Branch()->attach($BranchId, ['price'=>$price], ['type'=>$type], ['grade'=>$grade]);
+            if(isset($input['ingredient']))
+            {
+                $ingredients = $input['ingredient'];
+                foreach ($ingredients as $ingredient_id)
+                {
+                    $ingredient = Ingredient::with([])->get(['id'])->where('id',$ingredient_id)->pluck("id");
+                }
+            }
 
         }
-        $menu = $this->modelMenu->with("Branch", "Image")->get();
+        $menu = $this->modelMenu->with("BranchMenu", "Image")->get();
 
         return $menu;
     }

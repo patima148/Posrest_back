@@ -84,7 +84,9 @@ class ImageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $image = $this->service->update($request, $id);
+
+        return response()->json($image);
     }
 
     /**
