@@ -10,4 +10,9 @@ class BranchMenu extends Model
     {
         return $this->belongsTo('App\BranchIngredient','branch_menu_ingredient')->withTimestamps();
     }
+
+    function Menu()
+    {
+        return $this->belongsTo('App\Menu','branch_menus');
+    }
 }

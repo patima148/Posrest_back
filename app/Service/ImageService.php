@@ -21,10 +21,10 @@ class ImageService
     /**
      * @return Image
      */
-    public function store(Request $request)
+    public function store($input)
     {   $image = new Image();
-        $file_name = time().'.'.$request->file->getClientOriginalExtension();
-        $request->file->move(public_path('images'), $file_name);
+        $file_name = time().'.'.$input->file->getClientOriginalExtension();
+        $input->file->move(public_path('images'), $file_name);
         $image->file_name = $file_name;
         $image->save();
         return $image;
@@ -44,12 +44,12 @@ class ImageService
         return $image;
     }
 
-    public function update(Request $request,$id)
+    public function update($input,$id)
     {
         $image = Image::with("User", "Menu")->where('id',$id)->get()->first();
 
-        $file_name = time().'.'.$request->file->getClientOriginalExtension();
-        $request->file->move(public_path('images'), $file_name);
+        $file_name = time().'.'.$input->file->getClientOriginalExtension();
+        $input->file->move(public_path('images'), $file_name);
 
 
         $image->file_name = $file_name;

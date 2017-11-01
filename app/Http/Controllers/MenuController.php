@@ -33,7 +33,7 @@ class MenuController extends Controller
     public function store(Request $request)
     {
         $this->imageService->store($request);
-        $menu = $this->service->store($request);
+        $menu = $this->service->store($request->input());
         return response()->json($menu);
     }
 

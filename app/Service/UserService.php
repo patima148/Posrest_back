@@ -32,28 +32,28 @@ class UserService extends Controller
 
     public function getAll()
     {
-        $user = User::with("Role","Branch", "Image")->get();
+        $user = User::with("Role","Branch", "Image","Clocking")->get();
         return $user;
     }
 
     static function getByUserId($id){
-        $user = User::with("Role","Branch","Image")->get()->where('id',$id)->first();
+        $user = User::with("Role","Branch","Image","Clocking.ClockIn","Clocking.ClockOut")->get()->where('id',$id)->first();
         return $user;
     }
 
-    function store(Request $input)
+    function store(array $data)
         {
             $result = false;
             $user = new User();
-            $user->name = $input['name'];
+            $user->name = $data['name'];
             if($user==null){
                 return $result;
             }
-            $user->email = $input['email'];
-            $user->password = bcrypt($input['password']);
-            $user->phone_number = $input['phone_number'];
-            $user->role_id  = $input['role_id'];
-            $user->branch_id  = $input['branch_id'];
+            $user->email = $data['email'];
+            $user->password = bcrypt($data['password']);
+            $user->phone_number = $data['phone_number'];
+            $user->role_id  = $data['role_id'];
+            $user->branch_id  = $data['branch_id'];
             $user->image_id = Image::with([])->get(['id'])->pluck("id")->last();
             $user->save();
             $result = true;
@@ -61,19 +61,31 @@ class UserService extends Controller
             return $result;
     }
 
-    function update(Request $request, $id)
+    function update(array $data, $id)
     {
-        $user = User::find($id);
-        $user->name = $request['name'];
-        $user->email = $request['email'];
-        $user->password = bcrypt($request['password']);
-        $user->phone_number = $request['phone_number'];
-        $user->role_id  = $request['role_id'];
-        $user->branch_id  = $request['branch_id'];
-        //$user->name = $request->name;
-        //$user->image_id = Image::get(['id'])->pluck("id")->last();
-        $user->update();
-        return response()->json($user);
+        $result = false;
+        $user = $this->modelUser->find($id);
+        if(isset($data['email'])) {
+            $user->email = $data['email'];
+            return $data['email'];
+        }
+        if(isset($data['password'])) {
+            $user->password = bcrypt($data['password']);
+        }
+        if(isset($data['phone_number'])) {
+            $user->phone_number = $data['phone_number'];
+        }
+        if(isset($data['role_id'])) {
+            $user->role_id  = $data['role_id'];
+        }
+        if(isset($data['branch_id'])) {
+            $user->branch_id  = $data['branch_id'];
+        }
+        if(isset($data['image'])) {
+            $user->image_id = Image::with([])->get(['id'])->pluck("id")->last();
+        }
+
+        return $data;
     }
 
     public function delete($id)

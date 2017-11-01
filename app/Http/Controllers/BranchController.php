@@ -39,7 +39,7 @@ class BranchController extends Controller
      */
     public function store(Request $request)
     {
-        $branch = $this->service->store($request);
+        $branch = $this->service->store($request->input());
         return response()->json($branch);
     }
 
@@ -73,9 +73,10 @@ class BranchController extends Controller
      * @param  \App\Branch  $branch
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Branch $branch)
+    public function update(Request $request, $id)
     {
-        //
+        $branch = $this->service->update($request->get('name'),$request->get('address'),$id);
+        return response()->json($branch);
     }
 
     /**

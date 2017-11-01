@@ -64,7 +64,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Bangkok',
 
     /*
     |--------------------------------------------------------------------------
@@ -167,7 +167,8 @@ return [
 
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
-
+        Berkayk\OneSignal\OneSignalServiceProvider::class,
+        NotificationChannels\OneSignal\OneSignalServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -233,7 +234,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
-        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        'OneSignal' => Berkayk\OneSignal\OneSignalFacade::class
     ],
 
 ];

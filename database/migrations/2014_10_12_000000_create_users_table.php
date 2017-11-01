@@ -20,13 +20,13 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('phone_number')->nullable();
             $table->unsignedInteger('role_id')->foreign()
-                ->references('id')->on('role')
+                ->references('id')->on('roles')
                 ->onDelete('cascade');
             $table->unsignedInteger('branch_id')->foreign()
-                ->references('id')->on('branch')
+                ->references('id')->on('branches')
                 ->onDelete('cascade');
             $table->unsignedInteger('image_id')->foreign()
-                ->references('id')->on('image')
+                ->references('id')->on('images')
                 ->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();

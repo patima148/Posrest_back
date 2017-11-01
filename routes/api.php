@@ -32,7 +32,7 @@ Route::get('ingredient/{id}','IngredientController@show',[
 Route::put('ingredient/{id}/{branch_id}','IngredientController@update',[
     //'middleware' => 'jwt.aut'
 ]);
-//-------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------//
 
 Route::resource('menu','MenuController',[
     //'middleware' => 'jwt.aut'
@@ -44,19 +44,25 @@ Route::get('user/id/{id}','UserController@show');
 Route::get('user/name/{name}','UserController@showByName');
 Route::resource('user', 'UserController');
 Route::post('user', 'UserController@store');
-Route::put('user/id', 'UserController@update');
+Route::put('user/{id}', 'UserController@update');
 Route::post('add/branch', 'BranchController@store');
 Route::resource('branch', 'BranchController');
 Route::get('branch/{id}', 'BranchController@getById');
-
 Route::post('add/menu', 'MenuController@store');
+Route::put('branch/{id}', 'BranchController@update');
+
+//------------     Clocking     -------------------------------------------------//
+//Clock-in
+Route::post('clock-in','ClockInController@store');
+//Clock-out
+Route::post('clock-out','ClockOutController@store');
+//GetAllClocking
+Route::resource('clocking','ClockingController');
+Route::get('clocking/{user}','ClockingController@show');
+Route::post('payment','PaymentController@store');
+Route::put('clocking/{2}','ClockingController@update');
 
 
+Route::resource('Qoutes','QoutesController');
 
-
-
-
-
-
-
-
+Route::post('order','OrderController@store');

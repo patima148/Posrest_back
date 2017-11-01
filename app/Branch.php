@@ -20,8 +20,7 @@ class Branch extends Model
     }
     function Menu()
     {
-        return $this->belongsToMany('App\Menu','branch_menu')
-            ->withPivot("type","grade","price")
+        return $this->belongsToMany('App\Menu','branch_id','type','grade','price')
             ->withTimestamps();
     }
 }

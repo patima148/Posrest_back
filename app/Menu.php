@@ -16,7 +16,7 @@ class Menu extends Model
 
     function Branch()
     {
-        return $this->belongsToMany('App\Branch','branch_menu')
+        return $this->belongsToMany('App\Branch','branch_menus')
             ->withPivot("type","grade","price")
             ->withTimestamps();
     }
@@ -24,10 +24,14 @@ class Menu extends Model
     {
         return $this->belongsTo('App\BranchMenu','branch_menu_ingredient');
     }
-
     function Image()
     {
-        return $this->belongsTo('App\Branch', 'image_menu');
+        return $this->belongsTo('App\Image');
+    }
+
+    function Order()
+    {
+        return $this->belongsToMany('App\Order');
     }
 
 }

@@ -21,19 +21,30 @@ class BranchesService
         $this->model = $branch;
     }
 
-    function store(Request $request)
+    function store(array $input)
     {
         $branch = new Branch();
-        $branch->name = $request['name'];
-        $branch->address = $request['address'];
+        $branch->name = $input['name'];
+        $branch->address = $input['address'];
         $branch->save();
         return $branch;
     }
+
+    function update($name,$address, $id)
+    {
+        $branch = $this->model->find($id);
+        $branch->name = $name;
+        $branch->address = $address;
+        $branch->save();
+        return $branch;
+    }
+
     public function getById($id)
     {
         $branch = $this->model->with("User")->Where('id',$id)->first();
         return $branch;
     }
+
     public function getAll()
     {
         $branch = Branch::with("User")->get();

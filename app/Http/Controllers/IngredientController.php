@@ -44,7 +44,7 @@ class IngredientController extends Controller
      */
     public function store(Request $request, $id)
     {
-        $ingredient = $this->service->store($request, $id);
+        $ingredient = $this->service->store($request->input(), $id);
 
         return response()->json($ingredient);
     }
