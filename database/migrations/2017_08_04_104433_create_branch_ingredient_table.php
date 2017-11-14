@@ -21,7 +21,7 @@ class CreateBranchIngredientTable extends Migration
             $table->unsignedInteger('ingredient_id')->foreign()
                 ->references('id')->on('branches')
                 ->onDelete('cascade');
-            $table->decimal('price')->default("0.00");
+            $table->decimal('cost')->default("0.00");
             $table->string('type')->default("Normal");
 
             $table->timestamps();

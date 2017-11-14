@@ -20,8 +20,6 @@ class CreateBranchsTable extends Migration
             $table->string('address');
             $table->timestamps();
         });
-        $branch = ['name' => 'cmu', 'address' => '168/2'];
-        DB::table('branches')->insert($branch);
     }
 
 

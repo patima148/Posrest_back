@@ -55,6 +55,12 @@ class BranchController extends Controller
         return response()->json($branch);
     }
 
+    public function showBranchWithIngredient($id)
+    {
+        $branch = $this->service->getBranchWithIngredientById($id);
+        return response()->json($branch);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

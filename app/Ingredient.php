@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Ingredient extends Model
 {
     protected $fillable = [
-        'name','price','type','branch_id'
+        'name','cost','type','branch_id'
     ];
 
 
@@ -18,7 +18,7 @@ class Ingredient extends Model
 
     public function Branch()
     {
-        return $this->belongsToMany('App\Branch')->withPivot("price","type")
+        return $this->belongsToMany('App\Branch')->withPivot("cost","type","ingredient_id")
             ->withTimestamps();
     }
 }

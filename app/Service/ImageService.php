@@ -27,6 +27,7 @@ class ImageService
         $input->file->move(public_path('images'), $file_name);
         $image->file_name = $file_name;
         $image->save();
+
         return $image;
     }
 
@@ -37,9 +38,7 @@ class ImageService
 
     public function getById($id)
     {
-
         $image = $this->model->with([
-            "User"
         ])->where('id',$id);
         return $image;
     }

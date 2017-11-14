@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Menu;
 
-use App\Service\BranchesService;
 use App\Service\MenuService;
 use App\Service\ImageService;
 use Illuminate\Http\Request;

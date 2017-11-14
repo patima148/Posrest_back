@@ -41,13 +41,14 @@ class BranchesService
 
     public function getById($id)
     {
-        $branch = $this->model->with("User")->Where('id',$id)->first();
+        //$branch = $this->model->with("User")->Where('id',$id)->first();
+        $branch = Branch::with("user.role","user.image")->find($id);
         return $branch;
     }
 
     public function getAll()
     {
-        $branch = Branch::with("User")->get();
+        $branch = Branch::with("user.role","user.image")->get();
         return $branch;
     }
 
@@ -58,10 +59,16 @@ class BranchesService
         return response()->json($branch);
     }
 
+    public function getBranchWithIngredientById($branchId)
+    {
+       $branch = Branch::with("ingredient")->find($branchId);
+        return $branch;
+    }
+
     public function findByIngredientId($ingredientId)
     {
         $branch = $this->model->with([
-            "Ingredient"
+            "branch.ingredient"
         ])->Where('ingredient_id',$ingredientId)->first();
         return $branch;
     }

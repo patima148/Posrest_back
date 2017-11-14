@@ -12,6 +12,7 @@ namespace App\Service;
 use App\Menu;
 use App\BranchMenu;
 use App\Order;
+use App\OrderDetail;
 
 
 class OrderService
@@ -41,7 +42,6 @@ class OrderService
                     ->where('menu_id', $value)
                     ->where('branch_id',  $Order->branch_id)
                     ->value('price');
-
                 $totalprice += $price;
             }
             $Order->price = $totalprice;
@@ -72,16 +72,29 @@ class OrderService
         if(isset($data['menu']))
         {
             $menuId = $data['menu'];
+            $sweetness = $data['sweetness'];
             $numOfmenu = count($menuId);
-            $menu = [];
+            $loop = 0;
             $totalprice = (float)0.00;
             foreach ($menuId as $value){
                 $price = BranchMenu::with([])
                     ->where('menu_id', $value)
                     ->where('branch_id',  $Order->branch_id)
                     ->value('price');
-
                 $totalprice += $price;
+                /*$orderDetail = new OrderDetail();
+                $orderId = Order::with([])
+                    ->value('id')->last();
+                $orderDetail->order_id = $orderId;
+                $orderDetail->menu_id = $value;
+                $orderDetail->status = "ordering";
+                for($this->$loop; $loop<=count($sweetness); $loop++)
+                {
+                    $orderDetail->sweetness = $sweetness[$loop];
+                    $orderDetail->save();
+                    $this->$loop++;
+                    break;
+                }*/
             }
             $Order->price = $totalprice;
             $Order->table = $data['table'];
@@ -94,6 +107,19 @@ class OrderService
 
         }
         return false;
+    }
+
+    function getById($id)
+    {
+        $order = $this->OrderModel->with([
+        ])->where('id',$id);
+        return $order;
+    }
+
+    function getAll()
+    {
+        $order = Order::with([])->get();
+        return $order;
     }
 
 }

@@ -18,7 +18,11 @@ class CreateMenusTable extends Migration
         $table->string('name');
         $table->unsignedInteger('image_id')->foreign()
                 ->references('id')->on('images')
+                ->onDelete('cascade')->default("0");
+            $table->unsignedInteger('branch_id')->foreign()
+                ->references('id')->on('branches')
                 ->onDelete('cascade');
+
         $table->timestamps();
     });
     }

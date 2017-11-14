@@ -15,12 +15,12 @@ class Branch extends Model
     public function Ingredient()
     {
         return $this->belongsToMany('App\Ingredient','branch_ingredient')
-            ->withPivot("price","type")
+            ->withPivot("cost","type","ingredient_id")
             ->withTimestamps();
     }
     function Menu()
     {
-        return $this->belongsToMany('App\Menu','branch_id','type','grade','price')
+        return $this->belongsToMany('App\Menu','branch_id','type','grade','price','ingredient_id')
             ->withTimestamps();
     }
 }

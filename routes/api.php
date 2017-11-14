@@ -22,7 +22,7 @@ Route::resource('ingredient','IngredientController',[
     //'middleware' => 'jwt.aut'
 ]);
 
-Route::post('ingredient/{id}','IngredientController@store',[
+Route::post('ingredient','IngredientController@store',[
     //'middleware' => 'jwt.aut'
 ]);
 
@@ -38,8 +38,12 @@ Route::resource('menu','MenuController',[
     //'middleware' => 'jwt.aut'
 ]);
 
+Route::post('menu', 'MenuController@store');
+
+
 Route::resource('image','ImageController');
 
+Route::get('branch/ingredient/{branchId}', 'BranchController@showBranchWithIngredient');
 Route::get('user/id/{id}','UserController@show');
 Route::get('user/name/{name}','UserController@showByName');
 Route::resource('user', 'UserController');

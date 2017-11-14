@@ -15,10 +15,10 @@ class CreateBranchMenuIngredientTable extends Migration
     {
         Schema::create('branch_menu_ingredient', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('branch_menu_id')->foreign()
+            $table->unsignedInteger('menu_id')->foreign()
                 ->references('id')->on('branch_menu')
                 ->onDelete('cascade');
-            $table->unsignedInteger('branch_ingredient_id')->foreign()
+            $table->unsignedInteger('ingredient_id')->foreign()
                 ->references('id')->on('branch_ingredient')
                 ->onDelete('cascade');
             $table->timestamps();

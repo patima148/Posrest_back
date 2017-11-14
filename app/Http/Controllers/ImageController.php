@@ -61,7 +61,7 @@ class ImageController extends Controller
      */
     public function show()
     {
-        //
+
     }
 
     /**

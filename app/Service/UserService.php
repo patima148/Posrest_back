@@ -47,6 +47,7 @@ class UserService extends Controller
             $result = false;
             $user = new User();
             $user->name = $data['name'];
+            $user->surname = $data['surname'];
             if($user==null){
                 return $result;
             }
@@ -55,10 +56,10 @@ class UserService extends Controller
             $user->phone_number = $data['phone_number'];
             $user->role_id  = $data['role_id'];
             $user->branch_id  = $data['branch_id'];
+            $user->face_id = $data['faceId'];
             $user->image_id = Image::with([])->get(['id'])->pluck("id")->last();
             $user->save();
             $result = true;
-
             return $result;
     }
 
@@ -67,6 +68,11 @@ class UserService extends Controller
         $result = false;
         $user = User::find($id);
 
+        if(isset($data['name']))
+        {
+            $user->name = $data['name'];
+
+        }
         if(isset($data['email']))
         {
             $user->email = $data['email'];
@@ -87,7 +93,9 @@ class UserService extends Controller
         if(isset($data['image'])) {
             $user->image_id = Image::with([])->get(['id'])->pluck("id")->last();
         }
-
+        if(isset($data['faceId'])) {
+            $user->face_id = $data['faceId'];
+        }
         $user->save();
         return $user;
     }

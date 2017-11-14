@@ -30,32 +30,40 @@ class ClockingService
         $clocking->user_id = $data['user_id'];
         $clocking->branch_id = $data['branch_id'];
         $clocking->clockIn_time = Carbon::now();
-        $clocking->save();
+        if ($clocking->save())
+        {
+         return true;
+        }
 
-        return $clocking;
+        return false;
     }
 
 
     function clock_out(array $data, $user_id)
     {
-        $clocking = Clocking::find($user_id);/*
+        $row =  Clocking::with([])
+            ->where('user_id',$user_id)
+            ->where('clockOut_time',null)->pluck('id');
+        $clocking = Clocking::find($row);
+
         $clocking->clockOut_Time = Carbon::now();
         $clocking->save();
-        $testfrom = Clocking::with([])->where('user_id',$data['user_id'])->value('clockIn_time');
-        $to = Clocking::with([])->where('user_id',$data['user_id'])->value('clockOut_time');
-        $from = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', '2017-9-22 14:38:54');
-        $to = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', '2017-9-22 20:30:54');
-        $clocking->totalDuration_hour = $to->diffInHours($from);
-        $clocking->workingDuration_Min = $to->diffInMinutes($from);
+        $to = $clocking->clockOut_Time;
+        $from = Clocking::with([])->where('id',$row)->value('clockIn_time');
+        $refrom = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $from);
+        $reto = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $to);
+        $clocking->totalDuration_hour = $reto->diffInHours($refrom);
+        $clocking->workingDuration_Min = $reto->diffInMinutes($refrom);
         $clocking->payRate = $data['payRate'];
-        $clocking->save();*/
-        return  $clocking ;
 
+        return  $clocking->workingDuration_Min;
     }
 
     function clockingSummary(array $data, $user_id)
     {
+
     }
+
 
     function setPaymentRate($id, $newRate)
     {
@@ -77,7 +85,7 @@ class ClockingService
 
     function getAllClocking()
     {
-        $clocking = Clocking::with('user','branch','clockin','clockout')->where('id','!=','id')->get();
+        $clocking = Clocking::with('user','branch')->where('id','!=','id')->get();
         return $clocking;
     }
 

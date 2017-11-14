@@ -10,4 +10,9 @@ class BranchIngredient extends Model
     {
         return $this->belongsTo('App\BranchMenu','branch_menu_ingredient');
     }
+
+    function Ingredient()
+    {
+        return $this->belongsTo('App\Ingredient','branch_ingredient');
+    }
 }

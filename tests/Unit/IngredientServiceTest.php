@@ -44,7 +44,6 @@ class IngredientServiceTest extends TestCase
         return $mock;
     }
 
-
     public function test_fake()
     {
         $this->assertEquals(
@@ -53,10 +52,6 @@ class IngredientServiceTest extends TestCase
         );
     }
 
-    public function test_update()
-    {
-
-    }
 
     private $test_data = array(['id'=>'3','name'=>'Milk','branch_id'=>'2'],[]);
     private $test_data2 = array(['id'=> 2, "name"=> "Milk",]);

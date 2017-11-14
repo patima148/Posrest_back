@@ -21,7 +21,8 @@ class OrderController extends Controller
 
     public function index()
     {
-        //
+        $order = $this->orderService->getAll();
+        return response()->json($order);
     }
 
     /**
