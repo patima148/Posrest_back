@@ -71,7 +71,7 @@ Route::resource('order','OrderController');
 
 Route::post('order','OrderController@store');
 
-Route::resource('orderDetail','OrderDetailController');
+Route::resource('orderdetail','OrderdetailController');
 
 Route::resource('profiling','PartTimeProfileController');
 Route::post('profiling','PartTimeProfileController@store');

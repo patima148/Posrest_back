@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Order;
+
 use App\Service\OrderDetailService;
 use App\Service\OrderService;
 use Illuminate\Http\Request;
@@ -21,6 +21,7 @@ class OrderdetailController extends Controller
         $this->orderDetailService = $orderDetailService;
         $this->orderService = $orderService;
     }
+
     public function index()
     {
         $orderDetail =  $this->orderDetailService->getAll();

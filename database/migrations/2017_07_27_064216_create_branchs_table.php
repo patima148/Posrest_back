@@ -22,7 +22,6 @@ class CreateBranchsTable extends Migration
         });
     }
 
-
     /**
      * Reverse the migrations.
      *
