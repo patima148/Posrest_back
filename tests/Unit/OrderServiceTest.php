@@ -34,7 +34,7 @@ class OrderServiceTest extends TestCase
         return $mock;
     }
 
-    public function test_stor()
+    public function test_store()
     {
         $test_data = array(['branch_id'=>'1','status'=>'Order'
     ,'menu' => array('1','2'),'table'=>'1']);

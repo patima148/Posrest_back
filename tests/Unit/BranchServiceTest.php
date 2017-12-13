@@ -34,7 +34,7 @@ class BranchServiceTest extends TestCase
         $this->app->instance($class, $mock);
         return $mock;
     }
-    public function test_bracnh()
+    public function test_branch()
     {
         $this->assertEquals(
             'user@example.com',
@@ -48,7 +48,6 @@ class BranchServiceTest extends TestCase
             "address"=>"168/1",
             "created_at"=> "2017-08-30 05:27:17",
             "updated_at"=>"2017-08-30 05:27:17"
-
         ],
         [
             "id"=>2,

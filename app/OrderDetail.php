@@ -10,4 +10,8 @@ class OrderDetail extends Model
     {
         return $this->belongsTo('app\order');
     }
+    function Menu()
+    {
+        return $this->belongsTo('App\Menu');
+    }
 }

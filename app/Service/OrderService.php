@@ -40,16 +40,26 @@ class OrderService
             foreach ($menuId as $value){
                 $price = BranchMenu::with([])
                     ->where('menu_id', $value)
-                    ->where('branch_id',  $Order->branch_id)
                     ->value('price');
                 $totalprice += $price;
-            }
+             }
             $Order->price = $totalprice;
             $Order->table = $data['table'];
             $Order->NumberOfMenu = $numOfmenu;
             if($Order->save())
             {
-                return true;
+
+                $count = 0;
+                foreach ($menuId as $value){
+                    $orderdetail = new OrderDetail();
+                    $orderdetail->menu_id = $value;
+                    $orderdetail->order_id =  Order::with([])->get()->pluck('id')->last();;
+                    $orderdetail->sweetness  = $data['sweetness'][$count];
+                    $count++;
+                    $orderdetail->save();
+
+                }
+               return true;
             }
             //$menu = Menu::with(['branch'])->where('id',$menuId[1])->get();
 
@@ -118,7 +128,7 @@ class OrderService
 
     function getAll()
     {
-        $order = Order::with([])->get();
+        $order = Order::with('OrderDetail.Menu.BranchMenu')->get();
         return $order;
     }
 

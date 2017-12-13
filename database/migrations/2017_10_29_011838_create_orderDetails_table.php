@@ -13,16 +13,45 @@ class CreateOrderDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('orderDetails', function (Blueprint $table) {
+        Schema::create('order_details', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('order_id')->foreign()
                 ->references('id')->on('order');
             $table->unsignedInteger('menu_id')->foreign()
                 ->references('id')->on('menu');
-            $table->string('status');
+            $table->string('status')->default("ordering");
             $table->string('sweetness');
             $table->timestamps();
         });
+        $super = [
+            'order_id' => '1',
+            'menu_id' => '1',
+            'status' => 'done',
+            'sweetness' => 'normal',
+            "created_at" =>  '2017-12-5 19:54:59',
+            "updated_at" =>  '2017-12-5 19:54:59'
+        ];
+        DB::table('order_details')->insert($super);
+
+        $super = [
+            'order_id' => '1',
+            'menu_id' => '1',
+            'status' => 'done',
+            'sweetness' => 'high',
+            "created_at" =>  '2017-12-5 19:54:59',
+            "updated_at" =>  '2017-12-5 19:54:59'
+        ];
+        DB::table('order_details')->insert($super);
+
+        $super = [
+            'order_id' => '2',
+            'menu_id' => '1',
+            'status' => 'ordering',
+            'sweetness' => 'high',
+            "created_at" =>  \Carbon\Carbon::now(),
+            "updated_at" =>  \Carbon\Carbon::now()
+        ];
+        DB::table('order_details')->insert($super);
     }
 
     /**
@@ -32,6 +61,6 @@ class CreateOrderDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orderDetails');
+        Schema::dropIfExists('order_details');
     }
 }

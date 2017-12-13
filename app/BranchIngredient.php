@@ -8,7 +8,7 @@ class BranchIngredient extends Model
 {
     function BranchMenu()
     {
-        return $this->belongsTo('App\BranchMenu','branch_menu_ingredient');
+        return $this->belongsToMany('App\BranchMenu','ingredient_id');
     }
 
     function Ingredient()

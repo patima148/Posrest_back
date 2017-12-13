@@ -13,7 +13,7 @@ class Ingredient extends Model
 
     public function Menu()
     {
-        return $this->belongsToMany('App\Menu');
+        return $this->belongsToMany('App\Menu', 'branch_menu', 'ingredient_id');
     }
 
     public function Branch()

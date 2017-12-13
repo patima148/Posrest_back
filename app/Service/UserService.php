@@ -38,7 +38,9 @@ class UserService extends Controller
 
     static function getByUserId($id){
         //$user = User::with("Role","Branch","Image","Clocking.ClockIn","Clocking.ClockOut")->get()->where('id',$id)->first();
-        $user = User::find($id);
+        $user = User::with("Role","Branch", "Image","Clocking")->find($id);
+
+//        $user = User::with("Role","Branch", "Image","Clocking")->where('role_id','<=',3)->get();
         return $user;
     }
 
@@ -54,10 +56,10 @@ class UserService extends Controller
             $user->email = $data['email'];
             $user->password = bcrypt($data['password']);
             $user->phone_number = $data['phone_number'];
-            $user->role_id  = $data['role_id'];
-            $user->branch_id  = $data['branch_id'];
+            $user->role_id  = $data['roleId'];
+            $user->branch_id  = $data['branchId'];
             $user->face_id = $data['faceId'];
-            $user->image_id = Image::with([])->get(['id'])->pluck("id")->last();
+            $user->image_id = $data['imageId'];
             $user->save();
             $result = true;
             return $result;
@@ -66,7 +68,7 @@ class UserService extends Controller
     function update(array $data, $id)
     {
         $result = false;
-        $user = User::find($id);
+        $user = User::with("Role","Branch", "Image","Clocking")->find($id);
 
         if(isset($data['name']))
         {
@@ -84,14 +86,14 @@ class UserService extends Controller
         if(isset($data['phone_number'])) {
             $user->phone_number = $data['phone_number'];
         }
-        if(isset($data['role_id'])) {
-            $user->role_id  = $data['role_id'];
+        if(isset($data['roleId'])) {
+            $user->role_id  = $data['roleId'];
         }
-        if(isset($data['branch_id'])) {
-            $user->branch_id  = $data['branch_id'];
+        if(isset($data['branchId'])) {
+            $user->branch_id  = $data['branchId'];
         }
-        if(isset($data['image'])) {
-            $user->image_id = Image::with([])->get(['id'])->pluck("id")->last();
+        if(isset($data['imageId'])) {
+            $user->image_id = $data['imageId'];
         }
         if(isset($data['faceId'])) {
             $user->face_id = $data['faceId'];
@@ -103,7 +105,7 @@ class UserService extends Controller
     public function delete($id)
     {
         User::destroy($id);
-        $user = User::with("IngredientType")->get();
+        $user = User::with("Branch")->get();
         return response()->json($user);
     }
 }

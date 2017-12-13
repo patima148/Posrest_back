@@ -7,13 +7,20 @@
  */
 
 namespace app\Service;
-use app\OrderDetail;
+use App\OrderDetail;
 
 
 class OrderDetailService
 {
-        function __construct()
+    private $orderDetailModel;
+        function __construct(OrderDetail $orderDetail)
         {
+            $this->orderDetailModel = $orderDetail;
+        }
 
+        function getAll()
+        {
+            $orderDetail = OrderDetail::with('order','Menu.BranchMenu')->get();
+            return $orderDetail;
         }
 }

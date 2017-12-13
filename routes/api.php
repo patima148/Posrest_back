@@ -39,7 +39,7 @@ Route::resource('menu','MenuController',[
 ]);
 
 Route::post('menu', 'MenuController@store');
-
+//Route::post('menu/{id}', 'MenuController@store');
 
 Route::resource('image','ImageController');
 
@@ -70,3 +70,15 @@ Route::put('clock-out/{user_id}','ClockingController@update');
 Route::resource('order','OrderController');
 
 Route::post('order','OrderController@store');
+
+Route::resource('orderDetail','OrderDetailController');
+
+Route::resource('profiling','PartTimeProfileController');
+Route::post('profiling','PartTimeProfileController@store');
+
+Route::post('brewing','BrewingController@store');
+Route::put('brewing/{id}','BrewingController@update');
+Route::resource('brewing','BrewingController');
+
+Route::resource('report','ReportController');
+Route::get('report/{key}/{start}/{end}','ReportController@show');

@@ -76,7 +76,8 @@ class MenuService
     }
     function update(array $input,$id)
     {
-        $menu = new Menu();
+        $menu = Menu::find($id);
+
         if (isset($input['name']))
         {
             $menu->name = $input['name'];
@@ -87,7 +88,7 @@ class MenuService
             $menu->branch_id = $input['BranchId'];
         }
 
-        $menu->image_id = Image::with([])->get(['id'])->pluck('id')->last();
+        //$menu->image_id = Image::with([])->get(['id'])->pluck('id')->last();
 
         $menu->save();
 
@@ -124,7 +125,7 @@ class MenuService
 
     function getAll()
     {
-        $menu = $this->modelMenu->with("Branch","Image")->get();
+        $menu = $this->modelMenu->with("BranchMenu")->get();
         return $menu;
     }
 

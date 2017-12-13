@@ -4,16 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class Report extends Model
 {
-    function Menu()
+    function Brewing()
     {
-        return $this->hasMany('App\Menu');
+        return $this->hasMany('App\Brewing');
     }
 
     function OrderDetail()
     {
         return $this->hasMany('App\OrderDetail');
     }
-
 }

@@ -20,7 +20,6 @@ class Branch extends Model
     }
     function Menu()
     {
-        return $this->belongsToMany('App\Menu','branch_id','type','grade','price','ingredient_id')
-            ->withTimestamps();
+        return $this->belongsToMany('App\Menu','branch_id');
     }
 }

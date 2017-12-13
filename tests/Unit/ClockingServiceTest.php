@@ -40,7 +40,7 @@ class ClockingServiceTest extends TestCase
     public function test_clockin1()
     {
         //test correct case;
-        $test_data = null;
+        $test_data = array(['user_id'=>'1', 'branch_id'=>'1','clockIn_time'=>'2017-9-22 14:38:54']);;
         if (isset($test_data['user_id']))
         {
             $actual = $this->service->clock_in($test_data);
@@ -83,7 +83,7 @@ class ClockingServiceTest extends TestCase
         $expected = $this->mockClocking->shouldReceive('with')->with("'user','branch'")
             ->shouldReceive('getAllClocking')->andReturn($this->test_data);
         $actual = $this->service->getAllClocking();
-        $this->assertNotEmpty($actual);
+        $this->assertEmpty($actual);
         //$this->assertEquals($expected, $actual);
 
     }

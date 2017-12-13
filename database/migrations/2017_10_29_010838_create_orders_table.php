@@ -23,13 +23,32 @@ class CreateOrdersTable extends Migration
             $table->integer('NumberOfMenu');
             $table->timestamps();
         });
+
+        $super = [
+            'id' => '2',
+            'branch_id' => '1',
+            'status' => 'ordering',
+            'price' => '999',
+            'table' => 'A',
+            'NumberOfMenu' => '2',
+            "created_at" =>  \Carbon\Carbon::now(),
+            "updated_at" =>  \Carbon\Carbon::now()
+        ];
+        DB::table('orders')->insert($super);
+
+        $super = [
+            'id' => '1',
+            'branch_id' => '1',
+            'status' => 'done',
+            'price' => '999',
+            'table' => 'A',
+            'NumberOfMenu' => '2',
+            "created_at" =>  '2017-12-5 19:54:59',
+            "updated_at" =>  '2017-12-5 19:54:59'
+        ];
+        DB::table('orders')->insert($super);
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('orders');
