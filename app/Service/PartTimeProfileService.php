@@ -9,6 +9,7 @@
 namespace app\Service;
 
 use App\Brewing;
+use App\OrderDetail;
 use App\PartTimeProfile;
 use App\User;
 use App\Branch;
@@ -68,37 +69,85 @@ class PartTimeProfileService
         foreach ($userIds as $userId)
         {
             $countCup = Brewing::with([])->where('user_id',$userId)->count();
-            $sumBrewingTime = Brewing::with([])->where('user_id',$userId)->get();
-//            $averageTimeACup = $sumBrewingTime/$countCup;
+            $sumBrewingTime = Brewing::with([])->where('user_id',$userId)->sum('brewingDuration');
+            $averageTimeACup = 0;
 
-            $myArray[] = array(
-                'User ID' => $userId,
-//                'average time per cup' => $averageTimeACup,
-            );
-            $myArray2[] = array(
-               $userId
-            );
-            return  $sumBrewingTime;
+            $sumPauseTime = Brewing::with([])->where('user_id',$userId)->sum('stoppingDuration');
+            $averagePauseTime = 0;
+
+            $sumrefund = Brewing::with([])->where('user_id',$userId)->where('status', 'done')->count();
+            $correctness = 0;
+
+            $myUser = User::with([])->where('id', $userId)->get();
+            if($countCup!=0)
+            {
+                $averageTimeACup = $sumBrewingTime/$countCup;
+                $averagePauseTime = $sumPauseTime/$countCup;
+                $correctness = ($sumrefund/$countCup)*10;
+                $myArray[] = array(
+                    'User ID' => $myUser,
+                    'average time per cup' => $averageTimeACup,
+                    'average pause time' => $averagePauseTime,
+                    'correctness' => $correctness,
+                    'late' => 0
+                );
+            } elseif ($countCup==0)
+            {
+                $myArray[] = array(
+                    'User ID' => $myUser,
+                    'average time per cup' => 0,
+                    'average pause time' => 0,
+                    'correctness' => 0,
+                    'late' => 0
+                );
+            }
         }
-        return  $userIds;
+        return  $myArray;
     }
 
-    function getProfileByUserId()
+    function getProfileByUserId($userId)
     {
         $myArray = [];
-        $userIds = User::with([])->where('branch_id',1)->select('id')->get();;
+        $myArray2 = [];
         $sumBrewingTime = "Notloop";
-        foreach ($userIds as $userId)
-        {
             $countCup = Brewing::with([])->where('user_id',$userId)->count();
-            $sumBrewingTime = Brewing::with([])->where('user_id',$userId)->get();
-//            $averageTimeACup = $sumBrewingTime/$countCup;
+            $countPerDay = Brewing::with([])->where('user_id',$userId)->groupBy('created_at')->count();
+            $sumBrewingTime = Brewing::with([])->where('user_id',$userId)->sum('brewingDuration');
+            $averageTimeACup = 0;
 
-            $myArray[] = array(
-                $userId
-            );
-        }
-        return  $sumBrewingTime;
+            $sumPauseTime = Brewing::with([])->where('user_id',$userId)->sum('stoppingDuration');
+            $averagePauseTime = 0;
+
+            $sumrefund = Brewing::with([])->where('user_id',$userId)->where('status', 'done')->count();
+            $correctness = 0;
+
+            $myUser = User::with([])->where('id', $userId)->get();
+            if($countCup!=0)
+            {
+                $averageTimeACup = $sumBrewingTime/$countCup;
+                $averagePauseTime = $sumPauseTime/$countCup;
+                $correctness = ($sumrefund/$countCup)*10;
+                $averageCupPerDay = $countCup/$countPerDay;
+                $myArray[] = array(
+                    'User ID' => $myUser,
+                    'averageCupPerDay' => $countPerDay,
+                    'average time per cup' => $averageTimeACup,
+                    'average pause time' => $averagePauseTime,
+                    'correctness' => $correctness,
+                    'late' => 0
+                );
+            } elseif ($countCup==0)
+            {
+                $myArray[] = array(
+                    'User ID' => $myUser,
+                    'averageCupPerDay' => 0,
+                    'average time per cup' => 0,
+                    'average pause time' => 0,
+                    'correctness' => 0,
+                    'late' => 0
+                );
+            }
+        return  $myArray;
     }
 
 }

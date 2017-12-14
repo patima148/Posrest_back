@@ -24,8 +24,8 @@ class PaymentService
     {
         $payment = new Payment();
         $All = Clocking::with([])
-            ->where('user_id',$data['user_id'])
-            ->whereMonth('created_at',$data['month'])
+            ->Where('user_id',$data['user_id'])
+            ->WhereMonth('created_at',$data['month'])
             ->get(['workingDuration_Min'])->pluck('workingDuration_Min');
         $rates = Clocking::with([])
             ->where('user_id',$data['user_id'])

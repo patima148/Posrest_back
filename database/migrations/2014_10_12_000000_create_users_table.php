@@ -33,6 +33,53 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+        $super = [
+            'branch_id' => '1',
+            'name' => 'Peerapat',
+            'surname' => 'Chommanee',
+            'password' => '123456',
+            'email' => 'Peerapat@cmu.ac.th',
+            'phone_number' => '0882281932',
+            'role_id' => '3',
+            'image_id' => '12356468402435.png'
+        ];
+        DB::table('users')->insert($super);
+
+        $super = [
+            'branch_id' => '1',
+            'name' => 'patima',
+            'surname' => 'samranpong',
+            'password' => "123456",
+            'email' => 'Patima@cmu.ac.th',
+            'phone_number' => '0882281932',
+            'role_id' => '3',
+            'image_id' => '12356468402435.png'
+        ];
+        DB::table('users')->insert($super);
+
+        $super = [
+            'branch_id' => '1',
+            'name' => 'Teerapong',
+            'surname' => 'Boonmak',
+            'password' => "123456",
+            'email' => 'Teerapong@cmu.ac.th',
+            'phone_number' => '0882281932',
+            'role_id' => '3',
+            'image_id' => '12356468402435.png'
+        ];
+        DB::table('users')->insert($super);
+        $super = [
+            'branch_id' => '1',
+            'name' => 'Auttapon',
+            'surname' => 'Natajinda',
+            'password' => "123456",
+            'email' => 'Auttapon@cmu.ac.th',
+            'phone_number' => '0882281932',
+            'role_id' => '3',
+            'image_id' => '12356468402435.png'
+        ];
+        DB::table('users')->insert($super);
     }
 
     /**

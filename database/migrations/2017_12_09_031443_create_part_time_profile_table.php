@@ -28,6 +28,66 @@ class CreatePartTimeProfileTable extends Migration
             $table->float('late')->default(0.00);
             $table->timestamps();
         });
+
+        $super = [
+
+            'branch_id' => '1',
+            'user_id' => '1',
+            'average_time_per_cup' => '5',
+            'average_pause_time' => '2',
+            'average_cup_per_day' => '10',
+            'correctness' => '10',
+            'late' => '0'
+        ];
+        DB::table('part_time_profile')->insert($super);
+
+        $super = [
+
+        'branch_id' => '1',
+        'user_id' => '2',
+        'average_time_per_cup' => '7',
+        'average_pause_time' => '1',
+        'average_cup_per_day' => '8',
+        'correctness' => '10',
+        'late' => '0'
+        ];
+        DB::table('part_time_profile')->insert($super);
+
+        $super = [
+
+            'branch_id' => '1',
+            'user_id' => '3',
+            'average_time_per_cup' => '9',
+            'average_pause_time' => '2',
+            'average_cup_per_day' => '5',
+            'correctness' => '10',
+            'late' => '0'
+        ];
+        DB::table('part_time_profile')->insert($super);
+
+        $super = [
+
+            'branch_id' => '1',
+            'user_id' => '4',
+            'average_time_per_cup' => '6',
+            'average_pause_time' => '1',
+            'average_cup_per_day' => '11',
+            'correctness' => '10',
+            'late' => '0'
+        ];
+        DB::table('part_time_profile')->insert($super);
+
+        $super = [
+
+            'branch_id' => '1',
+            'user_id' => '5',
+            'average_time_per_cup' => '12',
+            'average_pause_time' => '3',
+            'average_cup_per_day' => '4',
+            'correctness' => '10',
+            'late' => '0'
+        ];
+        DB::table('part_time_profile')->insert($super);
     }
 
     /**

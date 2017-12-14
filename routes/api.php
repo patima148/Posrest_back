@@ -74,11 +74,13 @@ Route::post('order','OrderController@store');
 Route::resource('orderdetail','OrderdetailController');
 
 Route::resource('profiling','PartTimeProfileController');
-Route::post('profiling','PartTimeProfileController@store');
+Route::get('profiling/{userId}','PartTimeProfileController@show');
 
 Route::post('brewing','BrewingController@store');
 Route::put('brewing/{id}','BrewingController@update');
 Route::resource('brewing','BrewingController');
 
 Route::resource('report','ReportController');
-Route::get('report/{key}/{start}/{end}','ReportController@show');
+Route::get('report/{key}/{userId}/{day}/{shift}','ReportController@show');
+
+Route::get('workforce/{day}/{shift}','WorkforceController@show');

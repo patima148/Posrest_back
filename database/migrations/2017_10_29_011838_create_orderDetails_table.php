@@ -24,6 +24,7 @@ class CreateOrderDetailsTable extends Migration
             $table->timestamps();
         });
         $super = [
+            'id' => 1,
             'order_id' => '1',
             'menu_id' => '1',
             'status' => 'done',
@@ -34,6 +35,7 @@ class CreateOrderDetailsTable extends Migration
         DB::table('order_details')->insert($super);
 
         $super = [
+            'id' => 2,
             'order_id' => '1',
             'menu_id' => '1',
             'status' => 'done',
@@ -44,9 +46,54 @@ class CreateOrderDetailsTable extends Migration
         DB::table('order_details')->insert($super);
 
         $super = [
+            'id' => 3,
             'order_id' => '2',
             'menu_id' => '1',
-            'status' => 'ordering',
+            'status' => 'done',
+            'sweetness' => 'high',
+            "created_at" =>  \Carbon\Carbon::now(),
+            "updated_at" =>  \Carbon\Carbon::now()
+        ];
+        DB::table('order_details')->insert($super);
+
+        $super = [
+            'id' => 4,
+            'order_id' => '2',
+            'menu_id' => '1',
+            'status' => 'done',
+            'sweetness' => 'high',
+            "created_at" =>  \Carbon\Carbon::now(),
+            "updated_at" =>  \Carbon\Carbon::now()
+        ];
+        DB::table('order_details')->insert($super);
+
+        $super = [
+            'id' => 5,
+            'order_id' => '2',
+            'menu_id' => '2',
+            'status' => 'done',
+            'sweetness' => 'high',
+            "created_at" =>  \Carbon\Carbon::now(),
+            "updated_at" =>  \Carbon\Carbon::now()
+        ];
+        DB::table('order_details')->insert($super);
+
+        $super = [
+            'id' => 6,
+            'order_id' => '2',
+            'menu_id' => '2',
+            'status' => 'done',
+            'sweetness' => 'high',
+            "created_at" =>  \Carbon\Carbon::now(),
+            "updated_at" =>  \Carbon\Carbon::now()
+        ];
+        DB::table('order_details')->insert($super);
+
+        $super = [
+            'id' => 7,
+            'order_id' => '2',
+            'menu_id' => '3',
+            'status' => 'done',
             'sweetness' => 'high',
             "created_at" =>  \Carbon\Carbon::now(),
             "updated_at" =>  \Carbon\Carbon::now()

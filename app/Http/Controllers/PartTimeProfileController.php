@@ -52,9 +52,10 @@ class PartTimeProfileController extends Controller
      * @param  \App\PartTimeProfile  $partTimeProfile
      * @return \Illuminate\Http\Response
      */
-    public function show(PartTimeProfile $partTimeProfile)
+    public function show($userId)
     {
-        //
+        $profile = $this->PartTimeProfileService->getProfileByUserId($userId);
+        return response()->json($profile);
     }
 
     /**

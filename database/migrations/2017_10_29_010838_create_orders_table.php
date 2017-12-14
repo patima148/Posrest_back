@@ -29,8 +29,8 @@ class CreateOrdersTable extends Migration
             'branch_id' => '1',
             'status' => 'ordering',
             'price' => '999',
-            'table' => 'A',
-            'NumberOfMenu' => '2',
+            'table' => 'B',
+            'NumberOfMenu' => '5',
             "created_at" =>  \Carbon\Carbon::now(),
             "updated_at" =>  \Carbon\Carbon::now()
         ];

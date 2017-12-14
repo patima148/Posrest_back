@@ -59,14 +59,14 @@ class ReportController extends Controller
      * @param  \App\Report  $report
      * @return \Illuminate\Http\Response
      */
-    public function show($key,$start,$end)
+    public function show($key, $userId, $start,$end)
     {
         if($key == "selling"){
             $report = $this->reportService->getAllSellingReport($start,$end);
             return response()->json($report);
         }
         if($key == "barista"){
-            $report = $this->reportService->getAllBaristarReport($start,$end);
+            $report = $this->reportService->getAllBaristarReport($userId, $start,$end);
             return response()->json($report);
         }
         return response()->json("Fail");

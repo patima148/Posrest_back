@@ -23,7 +23,6 @@ class CreateBranchIngredientTable extends Migration
                 ->onDelete('cascade');
             $table->decimal('cost')->default("0.00");
             $table->string('type')->default("Normal");
-
             $table->timestamps();
         });
     }

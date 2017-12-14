@@ -8,6 +8,8 @@
 
 namespace app\Service;
 
+use App\BranchMenu;
+use App\Menu;
 use DateTime;
 use App\Brewing;
 use App\OrderDetail;
@@ -23,33 +25,128 @@ class ReportService
     }
 
 
-    function getAllBaristarReport($start,$end)
+    function getAllBaristarReport($userId, $start,$end)
     {
-       /* $brewing = Brewing::with([
-            'User',
-            'OrderDetail.Menu'
-        ])->WhereBetween('updated_at',[$start,$end])
-            ->Where('status','=','done')->get();
-        return $brewing;*/
-        $date = new DateTime($start);
-        $week = $date->format("W");
-         $brewing = Brewing::with([
+         $array = [];
+         $total = Brewing::with([
              'User',
              'OrderDetail.Menu'
-         ])->Where('updated_at',[$week])
+         ])->Where('user_id',$userId)
+             ->WhereBetween('updated_at',[$start,$end])
              ->Where('status','=','done')->get();
 
+         foreach ($total as $brewing)
+         {
+
+         }
+
+
+
+
          return $brewing;
+
+        /*$date= new DateTime();
+        $date = OrderDetail::with([])->value('created_at');
+
+
+        $brewing = $date->format('D');
+        return $brewing;*/
+
+
+        $orderIds = OrderDetail::with([])->pluck('id');
+        $array = [];
+        $count = 0;
+        $dayname = "Tue";
+        $numberOfCup = 0;
+        foreach($orderIds as $orderId)
+        {
+            $date = new DateTime();
+            $date = OrderDetail::with([])->where('id',$orderId)->value('updated_at');
+            $my = $date->format('D');
+            $date2 = $date->format('Y:m:d');
+            if($my == "Tue")
+            {
+                $numberOfCup = OrderDetail::with([])
+                    ->Where('updated_at',$date)
+                    ->count();
+                $array[] = array(
+                    'dayname' => $my,
+                    'numberOfCup' => $numberOfCup
+                );
+            }
+//            $Myorder  = OrderDetail::with([])->Where('updated_at',$dates)
+//                ->WhereBetween('updated_at', ['2017-1-1 08:00:00','2018-12-31 '])->get();*/
+            $array[] = array(
+                'dayname' => $my,
+                'numberOfCup' => $numberOfCup
+            );
+
+        }
+        return $array;
     }
 
     function getAllSellingReport($start,$end)
     {
 
         $report = OrderDetail::with(
-            'Menu.Branch')
+            'Menu.BranchMenu')
             ->WhereBetween('updated_at',[$start,$end])
             ->Where('status','=','done')->get();
 
+
+
+
         return $report;
     }
+
+    function getAllBaristarReport1($day,$shift)
+    {
+        $orderIds = OrderDetail::with([])->pluck('id');
+        $array = [];
+        $count = 0;
+        $dayname = "Tue";
+        $numberOfCup = 0;
+        foreach($orderIds as $orderId)
+        {
+            $date = new DateTime();
+            $date = OrderDetail::with([])->where('id',$orderId)->value('updated_at');
+            $my = $date->format('D');
+            $date2 = $date->format('Y:m:d');
+            if($my == "$day" && $shift==1)
+            {
+                $numberOfCup = OrderDetail::with([])
+                    ->whereBetween('updated_at', ["{$date2} 00:00:00", "{$date2} 20:00:00"])
+                    ->get();
+                $array[] = array(
+                    'dayname' => $my,
+                    'numberOfCup' => $numberOfCup,
+                    'Shift' => 1
+                );
+            } elseif ($my == "$day" && $shift==2)
+            {
+                $numberOfCup = OrderDetail::with([])
+                    ->whereBetween('updated_at', ["{$date2} 14:00:00", "{$date2} 19:00:00"])
+                    ->get();
+                $array[] = array(
+                    'dayname' => $my,
+                    'numberOfCup' => $numberOfCup,
+                    'date' => $date2
+                );
+            }
+            elseif ($my == "$day" && $shift==3)
+            {
+                $numberOfCup = OrderDetail::with([])
+                    ->whereBetween('updated_at', ["{$date2} 19:00:00", "{$date2} 23:59:59"])
+                    ->get();
+                $array[] = array(
+                    'dayname' => $my,
+                    'numberOfCup' => $numberOfCup,
+                    'Shift' => $date2
+                );
+            }
+
+        }
+        return $array;
+    }
+
 }

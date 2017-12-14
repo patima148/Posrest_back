@@ -24,6 +24,7 @@ class CreateBranchMenu extends Migration
             $table->string('type')->default("Brewing");
             $table->string('grade')->default("Normal");
             $table->decimal('price')->default("0.00");
+            $table->decimal('cost')->default("0.00");
             $table->timestamps();
         });
     }
