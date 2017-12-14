@@ -34,68 +34,15 @@ class ReportService
          ])->Where('user_id',$userId)
              ->WhereBetween('updated_at',[$start,$end])
              ->Where('status','=','done')->get();
-
-         foreach ($total as $brewing)
-         {
-
-         }
-
-
-
-
-         return $brewing;
-
-        /*$date= new DateTime();
-        $date = OrderDetail::with([])->value('created_at');
-
-
-        $brewing = $date->format('D');
-        return $brewing;*/
-
-
-        $orderIds = OrderDetail::with([])->pluck('id');
-        $array = [];
-        $count = 0;
-        $dayname = "Tue";
-        $numberOfCup = 0;
-        foreach($orderIds as $orderId)
-        {
-            $date = new DateTime();
-            $date = OrderDetail::with([])->where('id',$orderId)->value('updated_at');
-            $my = $date->format('D');
-            $date2 = $date->format('Y:m:d');
-            if($my == "Tue")
-            {
-                $numberOfCup = OrderDetail::with([])
-                    ->Where('updated_at',$date)
-                    ->count();
-                $array[] = array(
-                    'dayname' => $my,
-                    'numberOfCup' => $numberOfCup
-                );
-            }
-//            $Myorder  = OrderDetail::with([])->Where('updated_at',$dates)
-//                ->WhereBetween('updated_at', ['2017-1-1 08:00:00','2018-12-31 '])->get();*/
-            $array[] = array(
-                'dayname' => $my,
-                'numberOfCup' => $numberOfCup
-            );
-
-        }
-        return $array;
+         return $total;
     }
 
     function getAllSellingReport($start,$end)
     {
-
         $report = OrderDetail::with(
             'Menu.BranchMenu')
             ->WhereBetween('updated_at',[$start,$end])
             ->Where('status','=','done')->get();
-
-
-
-
         return $report;
     }
 

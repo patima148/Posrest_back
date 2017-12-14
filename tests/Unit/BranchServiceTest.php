@@ -34,12 +34,10 @@ class BranchServiceTest extends TestCase
         $this->app->instance($class, $mock);
         return $mock;
     }
-    public function test_branch()
+    public function test_getAll()
     {
-        $this->assertEquals(
-            'user@example.com',
-            'user@example.com'
-        );
+        $actual = $this->service->getAll();
+        $this->assertEmpty($actual);
     }
     private $test_data = array(
         [

@@ -109,25 +109,28 @@ class ClockingServiceTest extends TestCase
 
     private $test_data2 = null;
 
-    private $test_data = array(['Clocking' => ['id'=>'1', 'branch_id'=> 1, 'user_id'=>2,
-        'clockIn_Time'=>'2017-11-02 02:41:15',
-    'clockOut_Time'=>'2017-11-02 03:12:49',
-    'workingDuration_Min' => '352',
-    'totalDuration_Hour' => '5',
-    'payRate'=>'30',
-    'created_at'=>'2017-11-02 02:41:15',
-    'updated_at'=> '2017-11-02 03:12:49'],'User'=>[
-        'id'=>'2','name'=>'Q', 'email'=>'7777@gmail.co',
-        'phone_number'=>'0882281932','role_id'=>'3'
-        ,'branch_id'=>'1','image_id'=>'2',
-        'created_at'=>'2017-11-02 00:13:39',
-        'updated_at'=> '2017-11-02 00:13:39'],
-        'branch'=>[
-            'id'=>'1',
-            'name'=>'cmu',
-            'address'=>'168/1',
-            'created_at'=>Null,
-            'updated_at'=> Null
+    private $test_data = array([
+        'Clocking' => ['id'=>'1',
+            'branch_id'=> 1,
+            'user_id'=>2,
+            'clockIn_Time'=>'2017-11-02 02:41:15',
+            'clockOut_Time'=>'2017-11-02 03:12:49',
+            'workingDuration_Min' => '352',
+            'totalDuration_Hour' => '5',
+            'payRate'=>'30',
+            'created_at'=>'2017-11-02 02:41:15',
+            'updated_at'=> '2017-11-02 03:12:49'],'User'=>[
+            'id'=>'2','name'=>'Q', 'email'=>'7777@gmail.co',
+            'phone_number'=>'0882281932','role_id'=>'3',
+            'branch_id'=>'1','image_id'=>'2',
+            'created_at'=>'2017-11-02 00:13:39',
+            'updated_at'=> '2017-11-02 00:13:39'],
+            'branch'=>[
+                'id'=>'1',
+                'name'=>'cmu',
+                'address'=>'168/1',
+                'created_at'=>Null,
+                'updated_at'=> Null
         ]
     ]
     );

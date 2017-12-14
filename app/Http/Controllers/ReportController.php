@@ -21,15 +21,7 @@ class ReportController extends Controller
 
     public function index($key)
     {
-        if($key == "selling"){
-            $report = $this->reportService->getAllSellingReport();
-            return response()->json($report);
-        }
-        if($key == "barista"){
-            $report = $this->reportService->getAllBaristarReport();
-            return response()->json($report);
-        }
-        return response()->json("Fail");
+
     }
 
     /**

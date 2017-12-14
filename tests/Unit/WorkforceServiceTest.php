@@ -8,7 +8,7 @@
 
 namespace tests\Unit;
 
-
+use App\Workforce;
 use App\Service\WorkforceService;
 use Tests\TestCase;
 
@@ -20,7 +20,7 @@ class WorkforceServiceTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->mockBranch = $this->mock('App\Workforce');
+        $this->mockWorkforce = $this->mock('App\Workforce');
         $this->service = new WorkforceService($this->mockWorkforce);
     }
 
@@ -31,14 +31,15 @@ class WorkforceServiceTest extends TestCase
         return $mock;
     }
 
-    private $test_data = array(
-        'dayname' => "Thu",
-        "numberOfCup" => 5,
-        "Shift" => "1"
-    );
-    public function test_estimation()
+    public function test_estimate()
     {
-        $actual = $this->service->estimation("Thu", 1);
-        
+        $array[] = array(
+            'dayname' => 'Thu',
+            'numberOfCup' => 5,
+            'Shift' => 1
+        );
+
+        $estimation = $this->service->Estimate('Thu', 1);
+        $this->assertEquals($array, $estimation);
     }
 }

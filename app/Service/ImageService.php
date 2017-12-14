@@ -27,7 +27,6 @@ class ImageService
         $input->file->move(public_path('images'), $file_name);
         $image->file_name = $file_name;
         $image->save();
-
         return $image;
     }
 

@@ -20,6 +20,8 @@ class CreateImagesTable extends Migration
 
             $table->timestamps();
         });
+
+
     }
 
     /**

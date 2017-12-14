@@ -37,20 +37,9 @@ class IngredientServiceTest extends TestCase
         $this->service = new IngredientService($this->mockIngredient, $this->mockBranch);
     }
 
-    public function mock($class)
-    {
-        $mock = Mockery::mock($class);
-        $this->app->instance($class, $mock);
-        return $mock;
-    }
 
-    public function test_fake()
-    {
-        $this->assertEquals(
-            'user@example.com',
-            'user@example.com'
-        );
-    }
+
+
 
 
     private $test_data = array(['id'=>'3','name'=>'Milk','branch_id'=>'2'],[]);

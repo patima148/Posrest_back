@@ -19,12 +19,11 @@ class PartTimeProfileService
 {
     private $modelUser;
     private $modelBranch;
-    function __construct(User $user, Branch $branch)
+    private $modelPartTimeProfile;
+    function __construct(PartTimeProfile $partTimeProfile)
     {
-        $this->modelUser = $user;
-        $this->modelBranch = $branch;
+        $this->modelPartTimeProfile = $partTimeProfile;
     }
-
 
     function store(array $data)
     {

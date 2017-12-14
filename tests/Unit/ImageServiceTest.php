@@ -36,34 +36,27 @@ class ImageServiceTest extends TestCase
         $this->app->instance($class, $mock);
         return $mock;
     }
-    public function test_fake()
-    {
-        $this->assertEquals(
-            'user@example.com',
-            'user@example.com'
-        );
-    }
-/*
-    public function test_store()
+
+
+    /*public function test_store()
     {
 
         $mockImageRequest = new MockImageRequest();
 
-        $this->mock->shouldReceive('move')
+        $this->mockImage->shouldReceive('move')
             ->once()
             ->with(public_path('images'),'/7123658459.jpg');
 
         $actual = $this->service->store($mockImageRequest);
         $this->assertTrue($actual);
-    }
+    }*/
 
     public function test_getAll()
     {
-        $case1 = $this->mockImage->shouldReceive('all')->once()->andReturn(new Collection());
         $actual = $this->service->getAll();
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection',$actual);
     }
-*/
+
     private $data_set = array(['id'=>"1",'file_name'=>"1504069477.jpg"],
         ['id'=>"2",'file_name'=>"1504069477.jpg"],
         ['id'=>"3",'file_name'=>"1504069477.jpg"]);

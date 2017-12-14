@@ -48,12 +48,6 @@ class MenuServiceTest extends TestCase
         $this->app->instance($class, $mock);
         return $mock;
     }
-    public function test_fake()
-    {
-        $this->assertEquals(
-            'user@example.com',
-            'user@example.com'
-        );
-    }
+
 
 }
