@@ -49,5 +49,15 @@ class MenuServiceTest extends TestCase
         return $mock;
     }
 
+/*
+    public function test_getAll()
+    {
+        $expected = $this->mockMenu->shouldReceive('with')->andReturn($this->mockBranch)
+            ->shouldReceive('getAll')->andReturn(new Collection());
+        $actual = $this->service->getAll();
+        $this->assertNotNull($actual);
+    }*/
+
+
 
 }

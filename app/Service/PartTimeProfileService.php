@@ -84,18 +84,18 @@ class PartTimeProfileService
                 $averagePauseTime = $sumPauseTime/$countCup;
                 $correctness = ($sumrefund/$countCup)*10;
                 $myArray[] = array(
-                    'User ID' => $myUser,
-                    'average time per cup' => $averageTimeACup,
-                    'average pause time' => $averagePauseTime,
+                    'UserID' => $myUser,
+                    'averagetimepercup' => $averageTimeACup,
+                    'averagepausetime' => $averagePauseTime,
                     'correctness' => $correctness,
                     'late' => 0
                 );
             } elseif ($countCup==0)
             {
                 $myArray[] = array(
-                    'User ID' => $myUser,
-                    'average time per cup' => 0,
-                    'average pause time' => 0,
+                    'UserID' => $myUser,
+                    'averagetimepercup' => 0,
+                    'averagepausetime' => 0,
                     'correctness' => 0,
                     'late' => 0
                 );

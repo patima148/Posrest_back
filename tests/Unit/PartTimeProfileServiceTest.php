@@ -35,22 +35,22 @@ class PartTimeProfileServiceTest extends TestCase
     function test_getProfileByUserId()
     {
         $test_data[] = array(
-            'User ID' => [
+            'UserID' => [
                 'id' => 1,
                 'name' => 'Peerapat',
                 'surname' => 'Chommanee',
                 'email' => 'Peerapat@cmu.ac.th',
                 'phone_number' => '0882281932',
-                'face_id' => '',
-                'role_id' => 3,
-                'branch_id' => 1,
-                'image_id' => '4294967295',
+                'faceId' => '',
+                'roleId' => 3,
+                'branchId' => 1,
+                'imageId' => '4294967295',
                 'created_at' => null,
                 'updated_at' => null
         ],
         'averageCupPerDay' => 2,
-        'average time per cup' => 4.25,
-        'average pause time' => 0.5,
+        'averagetimepercup' => 4.25,
+        'averagepausetime' => 0.5,
         'correctness' => 10,
         'late' => 0
         );

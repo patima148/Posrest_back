@@ -32,14 +32,17 @@ class ReportServiceTest extends TestCase
         return $mock;
     }
 
-    public function test_getAllBaristarReport()
+   /* public function test_getAllBaristarReport()
     {
-        $expected =  $this->mockReport->shouldReceive('with')->with('user','orderdetail')
-            ->shouldReceive('getAllBaristarReport')->andReturn($this->test_data2);*/
         $actual = $this->service->getAllBaristarReport(1, '2017-12-04', '2017-12-11');
-        $this->assertTrue($actual['id'] == 1);
-    }
+        $this->assertNotEmpty($actual);
+    }*/
 
+    /*public function test_getAllSellingReport()
+    {
+        $actual = $this->service->getAllSellingReport('2017-12-04', '2017-12-11');
+        $this->assertNotEmpty($actual);
+    }*/
 
 
 }

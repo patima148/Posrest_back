@@ -33,8 +33,10 @@ class ReportService
              'OrderDetail.Menu'
          ])->Where('user_id',$userId)
              ->WhereBetween('updated_at',[$start,$end])
-             ->Where('status','=','done')->get();
-         return $total;
+             ->Where('status','=','done')->pluck('order_detail_id');
+         return $array;
+
+
     }
 
     function getAllSellingReport($start,$end)

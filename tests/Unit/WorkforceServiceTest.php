@@ -42,4 +42,6 @@ class WorkforceServiceTest extends TestCase
         $estimation = $this->service->Estimate('Thu', 1);
         $this->assertEquals($array, $estimation);
     }
+
+
 }

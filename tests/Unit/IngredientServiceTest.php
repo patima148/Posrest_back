@@ -27,7 +27,6 @@ class IngredientServiceTest extends TestCase
     private $service;
     private $mockIngredient;
     private $mockBranch;
-    private $mock;
 
     public function setUp()
     {
@@ -37,7 +36,20 @@ class IngredientServiceTest extends TestCase
         $this->service = new IngredientService($this->mockIngredient, $this->mockBranch);
     }
 
+    public function mock($class)
+    {
+        $mock = \Mockery::mock($class);
+        $this->app->instance($class, $mock);
+        return $mock;
+    }
 
+    public function test_getAll()
+    {
+        $expected = $this->mockIngredient->shouldReceive('with')->andReturn($this->mockBranch)
+        ->shouldReceive('getAll')->andReturn(new Collection());
+        $actual = $this->service->getAll();
+        $this->assertNotNull($actual);
+    }
 
 
 
