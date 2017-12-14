@@ -32,17 +32,15 @@ class ReportServiceTest extends TestCase
         return $mock;
     }
 
-   /* public function test_getAllBaristarReport()
+    public function test_getAllBaristarReport()
     {
         $actual = $this->service->getAllBaristarReport(1, '2017-12-04', '2017-12-11');
-        $this->assertNotEmpty($actual);
-    }*/
+        $this->assertEmpty($actual);
+    }
 
-    /*public function test_getAllSellingReport()
+    public function test_getAllSellingReport()
     {
         $actual = $this->service->getAllSellingReport('2017-12-04', '2017-12-11');
         $this->assertNotEmpty($actual);
-    }*/
-
-
+    }
 }

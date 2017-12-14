@@ -128,20 +128,20 @@ class PartTimeProfileService
                 $correctness = ($sumrefund/$countCup)*10;
                 $averageCupPerDay = $countCup/$countPerDay;
                 $myArray[] = array(
-                    'User ID' => $myUser,
+                    'UserID' => $myUser,
                     'averageCupPerDay' => $countPerDay,
-                    'average time per cup' => $averageTimeACup,
-                    'average pause time' => $averagePauseTime,
+                    'averagetimepercup' => $averageTimeACup,
+                    'averagepausetime' => $averagePauseTime,
                     'correctness' => $correctness,
                     'late' => 0
                 );
             } elseif ($countCup==0)
             {
                 $myArray[] = array(
-                    'User ID' => $myUser,
+                    'UserID' => $myUser,
                     'averageCupPerDay' => 0,
-                    'average time per cup' => 0,
-                    'average pause time' => 0,
+                    'averagetimepercup' => 0,
+                    'averagepausetime' => 0,
                     'correctness' => 0,
                     'late' => 0
                 );

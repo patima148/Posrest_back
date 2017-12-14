@@ -43,5 +43,4 @@ class WorkforceServiceTest extends TestCase
         $this->assertEquals($array, $estimation);
     }
 
-
 }
